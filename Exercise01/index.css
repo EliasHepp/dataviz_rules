@@ -1,0 +1,15 @@
+/* TASK 2B): Add a CSS rule which centers the text of all elements in the <div> containing the header elements */
+
+#head_style{
+  text-align: center;
+}
+
+
+/* You can ignore the code below this line */
+.footer-text::before {
+  font-size: 20px;
+  width: 100%;
+  content: "CSS file loaded successfully!";
+  color: black;
+}
+
