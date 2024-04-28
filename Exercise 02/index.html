@@ -7,22 +7,22 @@
 </head>
 <body>
   <div id="header">
-    <h1>Exercise 2: Data Preprocessing and d3.js basics</h1>
-    <p>Contributors: Agustina Pesce (01/1247019) & Elias Heppner (01/1244414)</p>
+    <h1>Exercise 2: Data Preprocessing and d3.js basics</h1> 
+    <p>Contributors: Agustina Pesce (01/1247019) & Elias Heppner (01/1244414)</p><br>
 </div>
 
 <p>We decided to omit entries with outside of the percent range (0-100). We decided not to take the state average as we lack the domain knowledge to tell whether assuming the average is reasonable. </p>
 <p>We did not transform the data in any way to investigate the original distribution.</p>
-
+<br>
   <svg id="chart" width="700" height="500">
     <g id="xaxis"></g>
     <g id="yaxis"></g>
   </svg>
-
+<br>
   <script src="data.js"></script>
   <script src="index.js"></script>
 
 <p>We decided for 50 bins. The exact choice is not of relevance, yet given the amount of data entries, one should rather apply too many bins than too few. Few bins, e.g. 10, are uninformative with regards to metrics of interest, like whether the data is normally distributed, skewed, etc. </p>
 <p>Without cleaning, the histogram would start at -1 on the left end side and contain values there.</p>
-
+<br>
 </body>
