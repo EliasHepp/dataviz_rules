@@ -26,8 +26,17 @@ function preprocessData(data) {
 
 // Setting up the histogram visualization using the processed data.
 function createHistogram(processedData, numbins) {
+    const margin = {top: 30, right: 30, bottom: 50, left: 60};
+    const width = 800 - margin.left - margin.right;
+    const height = 550 - margin.top - margin.bottom;
+    
     // Select the SVG element
-    const svg = d3.select("#chart");
+    const svg = d3.select("#chart")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 
     // Task 1.2: Create equal-width bins for the histogram
     // This subtask groups the data into a specified number of bins based on the unemployment rate.
@@ -69,15 +78,17 @@ function createHistogram(processedData, numbins) {
     // This subtask adds horizontal and vertical axes to the chart, with appropriate labels and scaling.
     // Add x-axis
     var xAxis = d3.axisBottom(xScale)
-        .ticks(numbins) // Specify the number of ticks you want
+        .ticks(numbins/2) // Specify the number of ticks you want
         .tickFormat(d3.format(".0f")); // Format the tick labels as integers
 
     svg.append("g")
         .attr("class", "x-axis")
        .attr("transform", "translate(0," + height + ")")
-       .call(xAxis)
-     .append("text")
+       .call(xAxis);
+     
+    svg.append("text")
        .attr("class", "axis-label")
+       .attr("transform", "translate(0," + height + ")")
        .attr("x", width / 2)
        .attr("y", margin.bottom - 10)
        .style("text-anchor", "middle")
@@ -90,14 +101,23 @@ function createHistogram(processedData, numbins) {
 
     svg.append("g")
         .attr("class", "y-axis")
-        .call(yAxis)
-        .append("text")
+        .call(yAxis);
+    
+    svg.append("text")
         .attr("class", "axis-label")
         .attr("transform", "rotate(-90)")
         .attr("x", -height / 2)
-        .attr("y", -margin.left + 10)
+        .attr("y", -margin.left + 15)
         .style("text-anchor", "middle")
         .text("Frequency");
+
+    svg.append("text")
+        .attr("class", "chart-title")
+        .attr("x", width / 2)
+        .attr("y", -margin.top / 2)
+        .attr("text-anchor", "middle")
+        .style("font-size", "18px") // Adjust font size as needed
+        .text("Histogram of Unemployment Rates in the USA"); // Your title text
 }
 
 // Execute the preprocessing and create the histogram
