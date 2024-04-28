@@ -53,12 +53,12 @@ function createHistogram(processedData, numbins) {
     // The x-scale maps unemployment rates to pixel values for the width of the histogram.
     const xScale = d3.scaleLinear()
         .domain([0, d3.max(processedData, d => d.rate)]) // Domain from 0 to maximum unemployment rate
-        .range([0, width]); // Adjust width as needed for your visualization
+        .range([0, width]);
 
     // The y-scale maps the count of entries in each bin to pixel values for the height of the bars.
     const yScale = d3.scaleLinear()
         .domain([0, d3.max(bins, d => d.length)]) // Domain from 0 to maximum count of entries in a bin
-        .range([height, 0]); // Adjust height as needed for your visualization
+        .range([height, 0]);
 
     // Bind the bins data to rectangles in the SVG
     const bars = svg.selectAll("rect")
@@ -78,8 +78,8 @@ function createHistogram(processedData, numbins) {
     // This subtask adds horizontal and vertical axes to the chart, with appropriate labels and scaling.
     // Add x-axis
     var xAxis = d3.axisBottom(xScale)
-        .ticks(numbins/2) // Specify the number of ticks you want
-        .tickFormat(d3.format(".0f")); // Format the tick labels as integers
+        .ticks(numbins/2) 
+        .tickFormat(d3.format(".0f"));
 
     svg.append("g")
         .attr("class", "x-axis")
@@ -96,8 +96,8 @@ function createHistogram(processedData, numbins) {
 
     // Add y-axis
     var yAxis = d3.axisLeft(yScale)
-        .ticks(10) // Specify the number of ticks you want
-        .tickFormat(d3.format(".0f")); // Format the tick labels as integers
+        .ticks(10) 
+        .tickFormat(d3.format(".0f")); 
 
     svg.append("g")
         .attr("class", "y-axis")
@@ -116,8 +116,8 @@ function createHistogram(processedData, numbins) {
         .attr("x", width / 2)
         .attr("y", -margin.top / 2)
         .attr("text-anchor", "middle")
-        .style("font-size", "18px") // Adjust font size as needed
-        .text("Histogram of Unemployment Rates in the USA"); // Your title text
+        .style("font-size", "18px")
+        .text("Histogram of Unemployment Rates in the USA"); 
 }
 
 // Execute the preprocessing and create the histogram
