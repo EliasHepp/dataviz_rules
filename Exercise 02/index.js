@@ -24,41 +24,10 @@ function preprocessData(data) {
     return cleanedData;
 }
 
-
 // Setting up the histogram visualization using the processed data.
-//function createHistogram(processedData, numbins) {
-    // Task 1.2: Create equal-width bins for the histogram
-    // This subtask groups the data into a specified number of bins based on the unemployment rate.
-    // Hint: look at the binning function of d3.bin https://observablehq.com/@d3/d3-bin
-    // Your code here
-
-    // Task 2.1: Create Histogram with Equal Width Binning
-    // Create a linear x- and y-scale
-    // The x-scale maps unemployment rates to pixel values for the width of the histogram.
-    // Your code here
-    // The y-scale maps the count of entries in each bin to pixel values for the height of the bars.
-    // Your code here
-
-    // Bind the bins data to rectangles in the SVG
-    // This subtask manages the rectangles that represent the bars of the histogram.
-    // Your code here
-
-    // Enter and update phase for rectangles
-    // Rectangles are added or updated based on the data. This subtask also defines the bar dimensions.
-    // Your code here
-
-    // Add axes to the histogram
-    // This subtask adds horizontal and vertical axes to the chart, with appropriate labels and scaling.
-    // Your code here
-
-//}
 function createHistogram(processedData, numbins) {
     // Select the SVG element
     const svg = d3.select("#chart");
-
-    // Get SVG dimensions
-    const width = +svg.attr("width");
-    const height = +svg.attr("height");
 
     // Task 1.2: Create equal-width bins for the histogram
     // This subtask groups the data into a specified number of bins based on the unemployment rate.
@@ -82,17 +51,6 @@ function createHistogram(processedData, numbins) {
         .domain([0, d3.max(bins, d => d.length)]) // Domain from 0 to maximum count of entries in a bin
         .range([height, 0]); // Adjust height as needed for your visualization
 
-    // Add x-axis
-    const xAxis = d3.axisBottom(xScale);
-    svg.select("#xaxis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-    // Add y-axis
-    const yAxis = d3.axisLeft(yScale);
-    svg.select("#yaxis")
-        .call(yAxis);
-
     // Bind the bins data to rectangles in the SVG
     const bars = svg.selectAll("rect")
         .data(bins);
@@ -106,8 +64,41 @@ function createHistogram(processedData, numbins) {
         .attr("width", d => xScale(d.x1) - xScale(d.x0))
         .attr("height", d => height - yScale(d.length))
         .attr("fill", "steelblue");
-}
 
+    // Add axes to the histogram
+    // This subtask adds horizontal and vertical axes to the chart, with appropriate labels and scaling.
+    // Add x-axis
+    var xAxis = d3.axisBottom(xScale)
+        .ticks(numbins) // Specify the number of ticks you want
+        .tickFormat(d3.format(".0f")); // Format the tick labels as integers
+
+    svg.append("g")
+        .attr("class", "x-axis")
+       .attr("transform", "translate(0," + height + ")")
+       .call(xAxis)
+     .append("text")
+       .attr("class", "axis-label")
+       .attr("x", width / 2)
+       .attr("y", margin.bottom - 10)
+       .style("text-anchor", "middle")
+       .text("Unemployment rate");
+
+    // Add y-axis
+    var yAxis = d3.axisLeft(yScale)
+        .ticks(10) // Specify the number of ticks you want
+        .tickFormat(d3.format(".0f")); // Format the tick labels as integers
+
+    svg.append("g")
+        .attr("class", "y-axis")
+        .call(yAxis)
+        .append("text")
+        .attr("class", "axis-label")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height / 2)
+        .attr("y", -margin.left + 10)
+        .style("text-anchor", "middle")
+        .text("Frequency");
+}
 
 // Execute the preprocessing and create the histogram
 const processedData = preprocessData(data);
