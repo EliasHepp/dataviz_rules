@@ -102,4 +102,4 @@ function createHistogram(processedData, numbins) {
 
 // Execute the preprocessing and create the histogram
 const processedData = preprocessData(data);
-createHistogram(processedData, 20);
+createHistogram(processedData, 50);
