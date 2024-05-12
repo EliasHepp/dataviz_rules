@@ -35,36 +35,20 @@ const visHeight = height - margin.top - margin.bottom;
 const visWidth = width - margin.left - margin.right;
 
 //TASK: get all dimensions in the dataset
-var allDimensions = Object.keys(data[0]);
+var allDimensions = TODO;
 
 console.log("Dimensions of the dataset: ", allDimensions);
 
 //TASK: Data cleaning
 // filter out any datapoints where a value is undefined
 // 334 datapoints should remain
-var cleanData = data.filter(function(entry) {
-  return Object.values(entry).every(function(value) {
-      return value !== undefined;
-});
-});
+var cleanData = TODO;
 
 console.log("cleaned Data:", cleanData);
 
 //TASK: seperate numeric and categorical dimensions
-var numerics = allDimensions.filter(function(dim) {
-  // Check if all values in the dimension are numeric
-  return cleanData.every(function(entry) {
-    return !isNaN(entry[dim]);
-  });
-});
-
-var categoricals = allDimensions.filter(function(dim) {
-  // Check if at least one value in the dimension is non-numeric
-  return cleanData.some(function(entry) {
-    return isNaN(entry[dim]);
-  });
-});
-
+var numerics = TODO;
+var categoricals = TODO;
 console.log("numerical dimensions", numerics);
 console.log("categorical dimensions", categoricals);
 
@@ -90,73 +74,42 @@ var xLabel = d3.select('g#vis-g').append('text').attr('class', 'axis-label')
 // the select for the color should only have categorical dimensions as options
 // add an event listener to the <select> tag
 //    call the appropriate change function (xAxisChange(newDim), yAxisChange(newDim), colorChange(newDim) or sizeChange(newDim))
-// X Axis Select
-d3.select("#x-axis-select")
-  .selectAll("option")
-  .data(numerics)
-  .enter()
-  .append("option")
-  .text(d => d);
-
-// Y Axis Select
-d3.select("#y-axis-select")
-  .selectAll("option")
-  .data(numerics)
-  .enter()
-  .append("option")
-  .text(d => d);
-
-// Size Select
-d3.select("#size-select")
-  .selectAll("option")
-  .data(numerics)
-  .enter()
-  .append("option")
-  .text(d => d);
-
-// Color Select
-d3.select("#color-select")
-  .selectAll("option")
-  .data(categoricals)
-  .enter()
-  .append("option")
-  .text(d => d);
 
 
-// Add event listeners to select tags
-d3.select("#x-axis-select").on("input", function() {
-  xAxisChange(this.value);
-});
 
-d3.select("#y-axis-select").on("input", function() {
-  yAxisChange(this.value);
-});
 
-d3.select("#size-select").on("input", function() {
-  sizeChange(this.value);
-});
 
-d3.select("#color-select").on("input", function() {
-  colorChange(this.value);
-});
+
+
+
+
+
+
+
+
+
+
+
 
 // TASK: x axis update:
 // Change the x Axis according to the passed dimension
 // update the cx value of all circles  
 // update the x Axis label 
-xAxisChange = (newDim) =>  {
-  // Your implementation here
-  console.log("X axis changed to:", newDim);
+xAxisChange = (newDim) => {
+
+
 };
+
 
 // TASK: y axis update:
 // Change the y Axis according to the passed dimension
 // update the cy value of all circles  
 // update the y Axis label 
 yAxisChange = (newDim) => {
-  // Your implementation here
-  console.log("Y axis changed to:", newDim);
+
+
 };
+
 
 // TASK: color update:
 // Change the color (fill) according to the passed dimension
@@ -166,21 +119,21 @@ yAxisChange = (newDim) => {
 // (see #color-select-legend in the html file)
 // the value text should be colored according to the color scale 
 colorChange = (newDim) => {
-  // Your implementation here
-  console.log("Color changed to:", newDim);
+
+
 };
+
 
 // TASK: size update:
 // Change the size according to the passed dimension
 // update the r value of all circles  
 sizeChange = (newDim) => {
-  // Your implementation here
-  console.log("Size changed to:", newDim);
+
+
 };
 
 //initialize the scales
 xAxisChange('culmen_length_mm');
-yAxisChange('culmen_depth_mm');
+yAxisChange('culmen_length_mm');
 colorChange('species');
-sizeChange('flipper_length_mm');
-
+sizeChange('culmen_length_mm');
