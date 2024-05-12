@@ -35,7 +35,7 @@ const visHeight = height - margin.top - margin.bottom;
 const visWidth = width - margin.left - margin.right;
 
 //TASK: get all dimensions in the dataset
-var allDimensions = Object.keys(data[0]);
+var allDimensions = Object.keys(data[0]); //dimensions are keys in the dataset dictionary
 
 console.log("Dimensions of the dataset: ", allDimensions);
 
@@ -43,8 +43,8 @@ console.log("Dimensions of the dataset: ", allDimensions);
 // filter out any datapoints where a value is undefined
 // 334 datapoints should remain
 var cleanData = data.filter(function(entry) {
-  return Object.values(entry).every(function(value) {
-      return value !== undefined;
+  return Object.values(entry).every(function(value) { //check that every value in the entry
+      return value !== undefined;                     //is different from undefined
 });
 });
 
@@ -52,16 +52,14 @@ console.log("cleaned Data:", cleanData);
 
 //TASK: seperate numeric and categorical dimensions
 var numerics = allDimensions.filter(function(dim) {
-  // Check if all values in the dimension are numeric
   return cleanData.every(function(entry) {
-    return !isNaN(entry[dim]);
+    return !isNaN(entry[dim]); //!isNaN : is a number
   });
 });
 
 var categoricals = allDimensions.filter(function(dim) {
-  // Check if at least one value in the dimension is non-numeric
-  return cleanData.some(function(entry) {
-    return isNaN(entry[dim]);
+  return cleanData.every(function(entry) {
+    return isNaN(entry[dim]); //isNaN : not a number
   });
 });
 
@@ -93,15 +91,15 @@ var xLabel = d3.select('g#vis-g').append('text').attr('class', 'axis-label')
 // X Axis Select
 d3.select("#x-axis-select")
   .selectAll("option")
-  .data(numerics)
+  .data(numerics)  //only numerics
   .enter()
   .append("option")
   .text(d => d);
-
+  
 // Y Axis Select
 d3.select("#y-axis-select")
   .selectAll("option")
-  .data(numerics)
+  .data(numerics)  //only numerics
   .enter()
   .append("option")
   .text(d => d);
@@ -109,19 +107,18 @@ d3.select("#y-axis-select")
 // Size Select
 d3.select("#size-select")
   .selectAll("option")
-  .data(numerics)
+  .data(numerics)  //only numerics
   .enter()
   .append("option")
   .text(d => d);
-
+  
 // Color Select
 d3.select("#color-select")
   .selectAll("option")
-  .data(categoricals)
+  .data(categoricals) //only caregoricals
   .enter()
   .append("option")
   .text(d => d);
-
 
 // Add event listeners to select tags
 d3.select("#x-axis-select").on("input", function() {
@@ -141,103 +138,84 @@ d3.select("#color-select").on("input", function() {
 });
 
 // TASK: x axis update:
-// Change the x Axis according to the passed dimension
-// update the cx value of all circles  
-// update the x Axis label 
 xAxisChange = (newDim) => {
-  // Update the x scale
+  // Change the x Axis according to the passed dimension
   const xScale = d3.scaleLinear()
     .domain(d3.extent(cleanData, d => d[newDim]))
     .range([0, visWidth]);
 
-  // Update the x-axis
   const xAxis = d3.axisBottom(xScale);
   d3.select("#x-axis")
     .attr("transform", "translate(0," + visHeight + ")") // Move x-axis to the bottom
     .call(xAxis);
 
-  // Update the cx value of all circles
+  // update the cx value of all circles  
   d3.selectAll('circle')
     .attr('cx', d => xScale(d[newDim]));
 
-  // Update the x-axis label
+  // update the x Axis label 
   const xLabel = d3.select(".axis-label.x-axis-label")
     .attr('x', visWidth)
-    .attr('y', visHeight + margin.bottom - 10) // Adjust the position as needed
+    .attr('y', visHeight + margin.bottom - 10) // Move label to the bottom
     .style('text-anchor', 'end') // Align the text to the end of the x-axis
     .text(newDim);
-
-  console.log("X axis changed to:", newDim);
 };
 
 // TASK: y axis update:
-// Change the y Axis according to the passed dimension
-// update the cy value of all circles  
-// update the y Axis label 
 yAxisChange = (newDim) => {
-  // 1. Update the y scale
+  // Change the y Axis according to the passed dimension
   const yScale = d3.scaleLinear()
     .domain(d3.extent(cleanData, d => d[newDim]))
     .range([visHeight, 0]);
 
-  // 2. Update the y-axis
   const yAxis = d3.axisLeft(yScale);
   d3.select("#y-axis").call(yAxis);
 
-  // 3. Update the cy value of all circles
+  // update the cy value of all circles  
   d3.selectAll('circle')
     .attr('cy', d => yScale(d[newDim]));
 
-  // 4. Update the y-axis label
+  // update the y Axis label 
   d3.select(".axis-label.y-axis-label").text(newDim);
 };
 
 // TASK: color update:
 // Change the color (fill) according to the passed dimension
-// update the fill value of all circles  
-//
-// add a <span> for each categorical value to the legend div 
-// (see #color-select-legend in the html file)
-// the value text should be colored according to the color scale 
 colorChange = (newDim) => {
-  // 1. Create a color scale for categorical values
+  //Color scale for categorical values
   const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
-  // 2. Update the fill value of all circles
+  //Update the fill value of all circles
   d3.selectAll('circle')
     .attr('fill', d => colorScale(d[newDim]));
 
-  // 3. Update the legend
+  //Update the legend
   const legend = d3.select("#color-select-legend");
+  legend.selectAll("*").remove(); // Clear previous legend items
   
-  // Clear previous legend items
-  legend.selectAll("*").remove();
-  
-  // Get unique categorical values for the selected dimension
+  //Get categorical values of the selected dimension
   const uniqueValues = [...new Set(cleanData.map(d => d[newDim]))];
   
-  // Add span for each categorical value to the legend
+  //Add a <span> for each categorical value to the legend div
   const spans = legend.selectAll("span")
     .data(uniqueValues)
     .enter()
     .append("span")
     .text(d => d)
-    .style("color", colorScale);
+    .style("color", colorScale); // the value text should be colored according to the color scale 
 };
+
 // TASK: size update:
 // Change the size according to the passed dimension
-// update the r value of all circles  
 sizeChange = (newDim) => {
   // Scale for the new dimension
   const sizeScale = d3.scaleLinear()
     .domain(d3.extent(cleanData, d => d[newDim]))
-    .range([3, 10]); // Adjust the range according to your preference
+    .range([3, 10]);
 
   // Update the r value of all circles
   d3.selectAll('circle')
     .attr('r', d => sizeScale(d[newDim]));
-
-  console.log("Size changed to:", newDim);
 };
 
 //initialize the scales
@@ -246,3 +224,9 @@ yAxisChange('culmen_depth_mm');
 colorChange('island');
 sizeChange('flipper_length_mm');
 
+//Initialize bottoms correspondingly as stayed above
+//Set only whenever this lines are executed 
+d3.select("#x-axis-select").property("value", "culmen_length_mm");
+d3.select("#y-axis-select").property("value", "culmen_depth_mm");
+d3.select("#size-select").property("value", "flipper_length_mm");
+d3.select("#color-select").property("value", "island");
