@@ -1,7 +1,6 @@
-Task 1a) Aside from the already implemented visual variables (position, size & color hue) in Figure 1, what are two further visual variables that could be used to encode more information in the scatterplot? 
+Task 1a) Aside from the already implemented visual variables (position, size & color hue) in Figure 1, what are two further visual variables that could be used to encode more information in the scatterplot? Give two examples on which data dimension could be encoded by which visual variable.
 
-Give two examples on which data dimension could be encoded by which visual variable. (The dataset contains the following dimensions: "species", "body_mass_g", and "sex". You can inspect the data under data.js.) 
-
+Task 1a) Answer
 Shape for sex
 Texture for species
 
@@ -10,21 +9,18 @@ Task 1b) Which problems could arise in Figure 1 when using size to encode
 i) "body_mass_g"? 
 ii) "sex"? 
 
-i) Due to the domain of the variable it may be difficult to percieved differences.
-ii) It could be ordered spontaneously by the viewer, since size is one of the visual variables which values are spontaneously ordered by humans. Would be more fitting to select a variable for which all factors have the same visibility
+Task 1b) Answer
+i) Due to the variable domain (which is very high) it may be difficult to interpret differences between data points.
+ii) Differences in size for gender could be ordered by the viewer, since size is one of the visual variables which values are spontaneously ordered by humans. Would be more fitting to select a variable for which all factors have the same visibility.
 
 Task 1c) Explain the principle of pre-attentive processing and its relevance in selecting appropriate visual variables for effective data communication. 
 
-Pre-attentive processing refers to those visual properties that are percieved very rapidly and accurately by humans (less than 200 to 250 milliseconds). 
-
-Knowing which features are processed this way helps to decide how to encode the most important information in the visualization. At the same time, conjunctions that inhibit pre-attentive recognition should be avoided. It should be noted that some features are asymmetric and therefore similar dispositions may not have the same impact on the viewer.
-
+Task 1c) Answer
+Pre-attentive processing refers to those visual properties that are percieved very rapidly and accurately by humans (less than 200 to 250 milliseconds). Being aware of which features are processed this way helps to decide how to encode the most important information in the visualization. At the same time, conjunctions that inhibit pre-attentive recognition should be avoided. It should be noted that some features are asymmetric and therefore similar dispositions may not have the same impact on the viewer.
 
 Task 1d) Argue which Gestalt Law(s) contribute most to the perception of clusters in Figure 1? Set them in relationship to the implemented visual variables (position, size & color hue).
 
-Proximity: data points that are nearby in their position
-Similarity: in color and size
-Continuity: data points away from the cluster centroid but situated adyacent to points in the perisphery may be perceived as part of the same cluster, mostly if these are in the same color.
-
-(connectednes?? for overlapping)
-
+Task 1d) Answer
+Proximity: data points that are nearby in their position as usually grouped
+Similarity: in color and size also bring to grouping of data points
+Continuity: data points away from the cluster centroid (no so similar position) but situated adyacent to points in the perisphery of the cluster may be perceived as part of the same cluster, mostly if these are in the same color.
