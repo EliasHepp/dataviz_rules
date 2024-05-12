@@ -180,7 +180,7 @@ sizeChange = (newDim) => {
 
 //initialize the scales
 xAxisChange('culmen_length_mm');
-yAxisChange('culmen_depth_mm');
+yAxisChange('culmen_length_mm');
 colorChange('species');
-sizeChange('flipper_length_mm');
+sizeChange('culmen_length_mm');
 
