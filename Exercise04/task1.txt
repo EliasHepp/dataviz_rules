@@ -4,15 +4,14 @@ Give two examples on which data dimension could be encoded by which visual varia
 
 Shape for sex
 Texture for species
-Color value for body_mass_g
 
 
 Task 1b) Which problems could arise in Figure 1 when using size to encode 
 i) "body_mass_g"? 
 ii) "sex"? 
 
-i) Not proportional????
-ii) It could be ordered spontaneously by the viewer. It could be thought that there is some kind of hierarchy or proportionality between the two categories
+i) Due to the domain of the variable it may be difficult to percieved differences.
+ii) It could be ordered spontaneously by the viewer, since size is one of the visual variables which values are spontaneously ordered by humans. Would be more fitting to select a variable for which all factors have the same visibility
 
 Task 1c) Explain the principle of pre-attentive processing and its relevance in selecting appropriate visual variables for effective data communication. 
 
@@ -23,10 +22,9 @@ Knowing which features are processed this way helps to decide how to encode the 
 
 Task 1d) Argue which Gestalt Law(s) contribute most to the perception of clusters in Figure 1? Set them in relationship to the implemented visual variables (position, size & color hue).
 
-
-Similarity (color, size)
-Proximity (position)
+Proximity: data points that are nearby in their position
+Similarity: in color and size
+Continuity: data points away from the cluster centroid but situated adyacent to points in the perisphery may be perceived as part of the same cluster, mostly if these are in the same color.
 
 (connectednes?? for overlapping)
-(continuity?? points close to the centroid may be perceived as part of a cluster due to its continuity with more central points)
 
