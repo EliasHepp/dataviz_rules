@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A Line-Chart with D3.js</title>
+    <link rel="stylesheet" href="index.css">
+    <!-- TASK-HTML-1: Dowload the d3.js file ( https://d3js.org/d3.v7.js ) and include it with a script tag in the header -->
+    <script src="https://d3js.org/d3.v7.js"></script>
+</head>
+
+<body>
+    <div id="header">
+        <h1>Exercise 3</h1> 
+        <p>Contributors: Agustina Pesce (01/1247019) & Elias Heppner (01/1244414)</p><br>
+    </div>
+    
+    <h1>Yearly Rain and Temperature in Germany from 1991 to 2015</h1>
+    <div id="vis-container"></div>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <button onclick="updateAxis()">Update Axis</button>
+
+<h2>Task 2d</h2>         
+<p>As expected, the values on the logarithmic scale are much closer to each other. Furthermore, the range of values is much smaller.</p>
+<p>First and foremost, logarithmic scales are more useful than linear scales when investigating variables that are exponential, or have large value differences between data points due to some other circumstance. For examlpe, GDP or bacteria growth is often shown in logarithmic scales as the absolute difference are extremely large, making the linear scale less intelligable.</p>
+    
+</body>
+</html>

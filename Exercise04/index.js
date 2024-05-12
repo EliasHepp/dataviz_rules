@@ -144,8 +144,29 @@ d3.select("#color-select").on("input", function() {
 // Change the x Axis according to the passed dimension
 // update the cx value of all circles  
 // update the x Axis label 
-xAxisChange = (newDim) =>  {
-  // Your implementation here
+xAxisChange = (newDim) => {
+  // Update the x scale
+  const xScale = d3.scaleLinear()
+    .domain(d3.extent(cleanData, d => d[newDim]))
+    .range([0, visWidth]);
+
+  // Update the x-axis
+  const xAxis = d3.axisBottom(xScale);
+  d3.select("#x-axis")
+    .attr("transform", "translate(0," + visHeight + ")") // Move x-axis to the bottom
+    .call(xAxis);
+
+  // Update the cx value of all circles
+  d3.selectAll('circle')
+    .attr('cx', d => xScale(d[newDim]));
+
+  // Update the x-axis label
+  const xLabel = d3.select(".axis-label.x-axis-label")
+    .attr('x', visWidth)
+    .attr('y', visHeight + margin.bottom - 10) // Adjust the position as needed
+    .style('text-anchor', 'end') // Align the text to the end of the x-axis
+    .text(newDim);
+
   console.log("X axis changed to:", newDim);
 };
 
@@ -154,8 +175,21 @@ xAxisChange = (newDim) =>  {
 // update the cy value of all circles  
 // update the y Axis label 
 yAxisChange = (newDim) => {
-  // Your implementation here
-  console.log("Y axis changed to:", newDim);
+  // 1. Update the y scale
+  const yScale = d3.scaleLinear()
+    .domain(d3.extent(cleanData, d => d[newDim]))
+    .range([visHeight, 0]);
+
+  // 2. Update the y-axis
+  const yAxis = d3.axisLeft(yScale);
+  d3.select("#y-axis").call(yAxis);
+
+  // 3. Update the cy value of all circles
+  d3.selectAll('circle')
+    .attr('cy', d => yScale(d[newDim]));
+
+  // 4. Update the y-axis label
+  d3.select(".axis-label.y-axis-label").text(newDim);
 };
 
 // TASK: color update:
@@ -166,21 +200,49 @@ yAxisChange = (newDim) => {
 // (see #color-select-legend in the html file)
 // the value text should be colored according to the color scale 
 colorChange = (newDim) => {
-  // Your implementation here
-  console.log("Color changed to:", newDim);
-};
+  // 1. Create a color scale for categorical values
+  const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
+  // 2. Update the fill value of all circles
+  d3.selectAll('circle')
+    .attr('fill', d => colorScale(d[newDim]));
+
+  // 3. Update the legend
+  const legend = d3.select("#color-select-legend");
+  
+  // Clear previous legend items
+  legend.selectAll("*").remove();
+  
+  // Get unique categorical values for the selected dimension
+  const uniqueValues = [...new Set(cleanData.map(d => d[newDim]))];
+  
+  // Add span for each categorical value to the legend
+  const spans = legend.selectAll("span")
+    .data(uniqueValues)
+    .enter()
+    .append("span")
+    .text(d => d)
+    .style("color", colorScale);
+};
 // TASK: size update:
 // Change the size according to the passed dimension
 // update the r value of all circles  
 sizeChange = (newDim) => {
-  // Your implementation here
+  // Scale for the new dimension
+  const sizeScale = d3.scaleLinear()
+    .domain(d3.extent(cleanData, d => d[newDim]))
+    .range([3, 10]); // Adjust the range according to your preference
+
+  // Update the r value of all circles
+  d3.selectAll('circle')
+    .attr('r', d => sizeScale(d[newDim]));
+
   console.log("Size changed to:", newDim);
 };
 
 //initialize the scales
 xAxisChange('culmen_length_mm');
-yAxisChange('culmen_length_mm');
-colorChange('species');
-sizeChange('culmen_length_mm');
+yAxisChange('culmen_depth_mm');
+colorChange('island');
+sizeChange('flipper_length_mm');
 
