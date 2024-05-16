@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exercise 5</title>
+        <link rel="stylesheet" href="index.css">
+        <script type="text/javascript" src="d3.js"></script>
+        <script type="text/javascript" src="index.js"></script>
+        <script type="text/javascript" src="conversion.js"></script>
+  </head>
+
+  <body onload="init()">
+    <div id="Introduction">
+      <h1>Exercise 5: Color Perception</h1>
+      <h4>Contributors: Agustina Pesce (01/1247019) & Elias Heppner (01/1244414)</h4>
+    </div>
+
+    <div>
+        <h2>Task 1 (15 points)</h2>
+        <ul>
+            <li><b>a) </b><i>(3/15 points)</i>
+                <p><i>Problem with JND?</i>
+                    <!-- Your answer... --> 
+                </p>
+                <p><i>Consequences?</i>
+                    <!-- Your answer... --> 
+                </p>
+                <p><i>Solution?</i>
+                    <!-- Your answer... --> 
+                </p>
+            </li>
+            
+            <li><b>b) </b><i>(2/15 points)</i>
+                <p><i>Disadvantage of 12-class Set3</i>
+                    <!-- Your answer... --> 
+                </p>
+            </li>
+            <li><b>c) </b><i>(10/15 points)</i>
+                <p><i>Problem after cropping?</i>
+                    <!-- Your answer... --> 
+                </p>
+                <p><i>What would be a better approach?</i>
+                    <!-- Your answer... --> 
+                </p>
+                <p><i>Which colors would you choose?</i>
+                    <!-- Your answer... --> 
+                </p>
+            </li>
+            <svg id="Task1">
+            </svg>
+        </ul>
+    </div>  
+      
+    <div>
+        <h2>Task 2 (5 points)</h2> 
+        <ul>
+            <li><b>a) </b><i>(1/5 points)</i>
+                <p><i>Construct mapping rules?</i>
+                    We chose to apply a mapping rule that uses the traffic light mapping drivers are familiar with: 0 is green, 50 is yellow, and 100 is red. 
+                    It takes the input number to get a proportional value of rgb between green and yellow if the number is below 50 and between yellow and red if it is above 50.
+                    Thus, it becomes greener the closer to 0, more yellow when closer to 50 and more red when closer to 100.
+                </p>
+                <svg id="Task2a" width="165" height="220">
+                    <g id="traffic_light_prototype" transform="translate(10,10)">
+                        <rect x="0" y="0" width="150" height = "200" fill="none" stroke-width="4" stroke="DimGray"/>
+                        <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
+                        <circle class="minValue"cx="20" cy="20"  r="15" fill="green" />
+                        <text class="trafficText" x="40" y="30" >0</text>
+                        <circle class="maxValue" cx="130"cy="20"  r="15" fill="red" />
+                        <text class="trafficText" x="70" y="30" >100</text>
+                        <circle id="currentLimit" cx="75" cy="120" r="70" fill="yellow" />
+                        <!-- Your code (or in index.js)... -->
+                    </g>
+                </svg>
+            </li>
+            
+            <li><b>b) </b><i>(2/5 points)</i>
+                <p><i>5 traffic lights</i>
+                    
+                </p>
+                <svg id="Task2b" width="900" height="220">
+                    <!-- First traffic light -->
+                    <g id="traffic_light1" transform="translate(10,10)">
+                        <rect x="0" y="0" width="150" height="200" fill="none" stroke-width="4" stroke="DimGray"/>
+                        <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
+                        <circle class="minValue" cx="20" cy="20" r="15" fill="green" />
+                        <text class="trafficText" x="40" y="30">0</text>
+                        <circle class="maxValue" cx="130" cy="20" r="15" fill="red" />
+                        <text class="trafficText" x="70" y="30">100</text>
+                        <circle id="currentLimit1" cx="75" cy="120" r="70" fill="yellow" />
+                    </g>
+                    <!-- Second traffic light -->
+                    <g id="traffic_light2" transform="translate(180,10)">
+                        <rect x="0" y="0" width="150" height="200" fill="none" stroke-width="4" stroke="DimGray"/>
+                        <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
+                        <circle class="minValue" cx="20" cy="20" r="15" fill="green" />
+                        <text class="trafficText" x="40" y="30">0</text>
+                        <circle class="maxValue" cx="130" cy="20" r="15" fill="red" />
+                        <text class="trafficText" x="70" y="30">100</text>
+                        <circle id="currentLimit2" cx="75" cy="120" r="70" fill="yellow" />
+                    </g>
+                    <!-- Third traffic light -->
+                    <g id="traffic_light3" transform="translate(350,10)">
+                        <rect x="0" y="0" width="150" height="200" fill="none" stroke-width="4" stroke="DimGray"/>
+                        <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
+                        <circle class="minValue" cx="20" cy="20" r="15" fill="green" />
+                        <text class="trafficText" x="40" y="30">0</text>
+                        <circle class="maxValue" cx="130" cy="20" r="15" fill="red" />
+                        <text class="trafficText" x="70" y="30">100</text>
+                        <circle id="currentLimit3" cx="75" cy="120" r="70" fill="yellow" />
+                    </g>
+                    <!-- Fourth traffic light -->
+                    <g id="traffic_light4" transform="translate(520,10)">
+                        <rect x="0" y="0" width="150" height="200" fill="none" stroke-width="4" stroke="DimGray"/>
+                        <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
+                        <circle class="minValue" cx="20" cy="20" r="15" fill="green" />
+                        <text class="trafficText" x="40" y="30">0</text>
+                        <circle class="maxValue" cx="130" cy="20" r="15" fill="red" />
+                        <text class="trafficText" x="70" y="30">100</text>
+                        <circle id="currentLimit4" cx="75" cy="120" r="70" fill="yellow" />
+                    </g>
+                    <!-- Fifth traffic light -->
+                    <g id="traffic_light5" transform="translate(690,10)">
+                        <rect x="0" y="0" width="150" height="200" fill="none" stroke-width="4" stroke="DimGray"/>
+                        <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
+                        <circle class="minValue" cx="20" cy="20" r="15" fill="green" />
+                        <text class="trafficText" x="40" y="30">0</text>
+                        <circle class="maxValue" cx="130" cy="20" r="15" fill="red" />
+                        <text class="trafficText" x="70" y="30">100</text>
+                        <circle id="currentLimit5" cx="75" cy="120" r="70" fill="yellow" />
+                    </g>
+                </svg>
+            </li>
+            
+            <li><b>c) </b><i>(2/5 points)</i>
+                <p><i>Disadvantages of your chosen color mapping?</i>
+                    A great disadvantage is that it is very difficult for drivers to grasp the difference between a few numbers (e.g. 66 and 68). Furthermore, the mapping from yellow to red means that values turn orange when getting closer to 75, which is hard to understand given the regular structure of the traffic light.
+                </p>
+                <p><i>Advantages of your chosen color mapping?</i>
+                    The value is continous and granular, allowing for a very precise mapping. An alternative mapping would be to use less than 100 colours, e.g. 3  (e.g. green, yellow, red) or 5 (dark green, light green, yellow, light red, dark red) and map values accordingly (0-33, 34-66, 67-100, etc.). This would be easier to understand, yet less granular in indicating tempo limits
+                </p>
+            </li>
+        </ul>
+        
+    </div>
+  </body>
+</html>
