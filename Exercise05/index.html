@@ -18,30 +18,42 @@
         <h2>Task 1 (15 points)</h2>
         <ul>
             <li><b>a) </b><i>(3/15 points)</i>
-                <p><i>Problem with JND?</i>
+                <p><i>Problem with JND?</i> <br>                 
+                    CIELab is built such that the change in its variables causes the same percieved change in the visual representation for the average human.
+                    However, this is done with two strong assumptions which do not hold for data visualization: no other elements should be present in the screen
+                    (isolation assumption) and the shape and size of the elements don't influence it (geometric assumption).
                     <!-- Your answer... --> 
                 </p>
-                <p><i>Consequences?</i>
+                <p><i>Consequences?</i><br>
+                    The consequences are that the JNDs actually get bigger (harder to detect) with smaller mark sizes. Moreover, JND in lightness is smaller (easier to detect) compared to a or b hue vectors. 
                     <!-- Your answer... --> 
                 </p>
-                <p><i>Solution?</i>
+                <p><i>Solution?</i><br>
+                    Therefore, the 1 unit Euclidean difference rule of thumb shouldn't be followed blindly and the the color ramp should be adapted to the specific visualization 
+                    technique and mark size. Implementation solutions include increasing color distance when size marks are smaller and profit more of the change the lightness of the color
+                    instead of the hue variables to show numeric information.
                     <!-- Your answer... --> 
                 </p>
             </li>
             
             <li><b>b) </b><i>(2/15 points)</i>
-                <p><i>Disadvantage of 12-class Set3</i>
+                <p><i>Disadvantage of 12-class Set3</i> <br>  
+                    Spontaneous ordering effects could take place for some colors that have similar hue. (????????????)
                     <!-- Your answer... --> 
                 </p>
             </li>
             <li><b>c) </b><i>(10/15 points)</i>
-                <p><i>Problem after cropping?</i>
+                <p><i>Problem after cropping?</i> <br>  
+                    After cropping the pallete is still not colorblindness friendly. As seen in the www.vis4.net modelation, "protanopia" colorblindness (no red cones)
+                    does not difference between red and green, and "deuteranopia" colorblindness (no green) would struggle with differentiating green and purple (since purple has blue).
                     <!-- Your answer... --> 
                 </p>
-                <p><i>What would be a better approach?</i>
+                <p><i>What would be a better approach?</i> <br>  
+                    A better approach would be avoiding green.
                     <!-- Your answer... --> 
                 </p>
-                <p><i>Which colors would you choose?</i>
+                <p><i>Which colors would you choose?</i> <br>  
+                    To avoid green yellow, purple, red and orange could be used
                     <!-- Your answer... --> 
                 </p>
             </li>
@@ -54,7 +66,7 @@
         <h2>Task 2 (5 points)</h2> 
         <ul>
             <li><b>a) </b><i>(1/5 points)</i>
-                <p><i>Construct mapping rules?</i>
+                <p><i>Construct mapping rules?</i> <br>  
                     We chose to apply a mapping rule that uses the traffic light mapping drivers are familiar with: 0 is green, 50 is yellow, and 100 is red. 
                     It takes the input number to get a proportional value of rgb between green and yellow if the number is below 50 and between yellow and red if it is above 50.
                     Thus, it becomes greener the closer to 0, more yellow when closer to 50 and more red when closer to 100.

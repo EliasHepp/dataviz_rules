@@ -6,7 +6,7 @@ function init()
     console.log("JavaScript loaded!")
     const data = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
     //Change the index position to select different colors.
-    const circles4 = selectColorsByIndices(data, [0,1,2,3]);
+    const circles4 = selectColorsByIndices(data, [1,2,3,5]);
     
     //This is the Set3 colormap from colorbrewer2.org
     var myColor = d3.scaleOrdinal().domain(data)
