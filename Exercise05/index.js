@@ -20,10 +20,10 @@ function init()
             .attr("fill", function(d){return myColor(d) })
     
     //Visualize the 4 selected colors with circles of sufficient size.
-    svg.selectAll(".colors4Circle").data(circles4).enter().append("circle")
-    .attr("cx", function(d,i){return 10 + i*20})
-    .attr("cy", 40).attr("r", 10)
-    .attr("fill", function(d){return myColor(d) })
+    //svg.selectAll(".colors4Circle").data(circles4).enter().append("circle")
+    //.attr("cx", function(d,i){return 10 + i*20})
+    //.attr("cy", 40).attr("r", 10)
+    //.attr("fill", function(d){return myColor(d) })
 
     //+++++++++++
     //++Task 1c++
@@ -33,14 +33,51 @@ function init()
     //Examples:
     //get the RGB values of a circle
     //function extractRGBFromSVG
-    let index = 0;
-    const circles = svg.selectAll("circle").nodes();
-    console.log(extractRGBFromSVG(d3.select(circles[index])));
+    //let index = 0;
+    //const circles = svg.selectAll("circle").nodes();
+    //console.log(extractRGBFromSVG(d3.select(circles[index])));
 
     //conversion from RGB values to CIELab
     //function rgbToCIELAB
-    console.log(rgbToCIELAB(141, 211, 199));
+    //console.log(rgbToCIELAB(141, 211, 199));
 
+    const circles = svg.selectAll("circle").nodes();
+
+    let rgbColors = [];
+    for (let i = 0; i < circles.length; i++) {
+        if ([0, 6, 10].includes(i)) continue;
+        let rgb = extractRGBFromSVG(d3.select(circles[i]));
+        if (rgb) rgbColors.push(rgb);
+    }
+
+    // Convert the list of RGB colors to XYZ
+    let xyzColors = rgbColors.map(({ r, g, b }) => rgbToXYZ(r, g, b));
+
+    // Create a dictionary that maps XYZ color to RGB color
+    const XYZtoRGBDict = {};
+    rgbColors.forEach(({ r, g, b }, index) => {
+        const [x, y, z] = rgbToXYZ(r, g, b);
+        XYZtoRGBDict[`${x},${y},${z}`] = { r, g, b };
+    });
+
+    // Find the set of 4 colors with the greatest mean distance between each other in XYZ space
+    const bestColorSetXYZ = findMaxDistanceColors(xyzColors);
+    console.log("Best set of 4 colors (XYZ):", bestColorSetXYZ);
+
+    // Get the bestColorSetRGB with the XYZtoRGBDict and create circles4
+    const bestColorSetRGB = bestColorSetXYZ.map(([x, y, z]) => {
+        const key = `${x},${y},${z}`;
+        return XYZtoRGBDict[key];
+    });
+    console.log("Best set of 4 colors (RGB):", bestColorSetRGB);
+
+    // Visualize the 4 selected colors with circles of sufficient size
+    svg.selectAll(".colors4Circle").data(bestColorSetRGB).enter().append("circle")
+        .attr("class", "colors4Circle")
+        .attr("cx", function(d, i) { return 10 + i * 20; })
+        .attr("cy", 40).attr("r", 10)
+        .attr("fill", function(d) { return `rgb(${d.r}, ${d.g}, ${d.b})`; });
+}
 
 
     //+++++++++++
@@ -101,7 +138,7 @@ for (let i = 0; i < 5; i++) {
 for (let i = 0; i < 5; i++) {
     updateColor2b(randomNumbers[i], i + 1);
 }    
-}
+
 
 //++++++++++++++++++++++++++++++++++++++++++++++++
 //++++++++No need to touch this function++++++++++
