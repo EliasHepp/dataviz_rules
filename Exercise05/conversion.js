@@ -98,43 +98,47 @@ function f(t) {
     }
 }
 
+//function for Euclidean distances
+//i.e. differences to the power of 2 and square root of their sum
 function calculateDistance(color1, color2) {
     const [x1, y1, z1] = color1;
     const [x2, y2, z2] = color2;
     return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2));
 }
 
-// Function to find the set of 4 colors with the greatest mean distance between each other in XYZ space
+//Combinatory function for all possible sets of 4
+function combinations(arr, k) {
+    const results = [];
+    const recurse = (start, combo) => {
+        if (combo.length === k) {
+            results.push(combo);
+            return;
+        }
+        for (let i = start; i < arr.length; i++) {
+            recurse(i + 1, combo.concat([arr[i]]));
+        }
+    };
+    recurse(0, []);
+    return results;
+}
+
+// Function to find the set of 4 colors with the greatest distance between each other in XYZ space
 function findMaxDistanceColors(colors) {
-    let maxMeanDistance = 0;
-    let bestSet = [];
+    let maxDistance = 0; //initial max mean distance
+    let bestSet = []; //retain bestSet
 
-    function combinations(arr, k) {
-        const results = [];
-        const recurse = (start, combo) => {
-            if (combo.length === k) {
-                results.push(combo);
-                return;
-            }
-            for (let i = start; i < arr.length; i++) {
-                recurse(i + 1, combo.concat([arr[i]]));
-            }
-        };
-        recurse(0, []);
-        return results;
-    }
-
-    const setsOfFour = combinations(colors, 4);
-    setsOfFour.forEach(set => {
-        let distances = [];
+    const setsOfFour = combinations(colors, 4); //create all set of 4 combinations
+    setsOfFour.forEach(set => {                 //calculate mean distance for each set
+        
+        let distances = []; //distances within an specific set
         for (let i = 0; i < set.length; i++) {
             for (let j = i + 1; j < set.length; j++) {
-                distances.push(calculateDistance(set[i], set[j]));
+                distances.push(calculateDistance(set[i], set[j])); //distance between 2 set colors
             }
         }
-        const meanDistance = distances.reduce((a, b) => a + b, 0) / distances.length;
-        if (meanDistance > maxMeanDistance) {
-            maxMeanDistance = meanDistance;
+        const DistanceSum = distances.reduce((a, b) => a + b, 0); // since all sets have same amount of colors no need tocalculate the actual mean with "/ distances.length"
+        if (DistanceSum > maxDistance) {
+            maxDistance = DistanceSum;
             bestSet = set;
         }
     });

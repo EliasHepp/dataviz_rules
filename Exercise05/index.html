@@ -25,7 +25,7 @@
                     <!-- Your answer... --> 
                 </p>
                 <p><i>Consequences?</i><br>
-                    The consequences are that the JNDs actually get bigger (harder to detect) with smaller mark sizes. Moreover, JND in lightness is smaller (easier to detect) compared to a or b hue vectors. 
+                    The consequences are that the JNDs actually gets bigger (harder to detect) with smaller mark sizes. Moreover, JND in lightness is smaller (easier to detect) compared to a or b hue vectors. 
                     <!-- Your answer... --> 
                 </p>
                 <p><i>Solution?</i><br>
@@ -45,16 +45,23 @@
             </li>
             <li><b>c) </b><i>(10/15 points)</i>
                 <p><i>Problem after cropping?</i> <br>  
-                    After cropping the pallete is still not colorblindness friendly. As seen in the www.vis4.net modelation, "protanopia" colorblindness (no red cones)
-                    does not difference between red and green, and "deuteranopia" colorblindness (no green) would struggle with differentiating green and purple (since purple has blue).
+                    After cropping the palette is still not colorblindness friendly. As seen in the www.vis4.net modelation, "protanopia" colorblindness (no red cones)
+                    does not diferentiate between red and green, and "deuteranopia" colorblindness (no green) would struggle with differentiating green and purple (since purple has blue).
                     <!-- Your answer... --> 
                 </p>
                 <p><i>What would be a better approach?</i> <br>  
-                    A better approach would be avoiding green.
+                    A better approach would be avoiding green and aiming to have the most different colors between each other.
                     <!-- Your answer... --> 
                 </p>
                 <p><i>Which colors would you choose?</i> <br>  
-                    To avoid green yellow, purple, red and orange could be used
+                    To decide what colors to choose we created an implementation which avoided the green options (see above) and had the greatest distance between
+                    all colors in their proyection in the xyz space. As can be seen in the CIELab representation in the console, the chosen colors spread along the different a-b axis possibilities.
+                    While red is positive in both hue axis, blue is negative in both and the remaining colors (pink and yellow) are positive in one of them while negative in the other: <br>
+                    <br>
+                    0: {L: 67, a: 45, b: 29}<br>
+                    1: {L: 69, a: -7, b: -22}<br>
+                    2: {L: 87, a: 20, b: -5}<br>
+                    3: {L: 93, a: -9, b: 62}<br>
                     <!-- Your answer... --> 
                 </p>
             </li>
@@ -68,7 +75,7 @@
         <ul>
             <li><b>a) </b><i>(1/5 points)</i>
                 <p><i>Construct mapping rules?</i> <br>  
-                    We chose to apply a mapping rule that maps the speed limit from red (0) to blue (100). Red is usually associated with slowing down and danger in the domain of traffic regulation, thus fitting the 
+                    We chose to apply a mapping rule that maps the speed limit from red (0) to blue (100). Red is usually associated with slowing down and danger in the domain of traffic regulation (semantic), thus fitting the 
                     lowest speed value possible. Blue is used as an alternative for the usual green, as it is perceivable by colour blind people. The traffic light was designed to be inclusive.
                     It takes the input number to get a proportional value of rgb between the specific red and blue (recommended for colour blind people).                </p>
                 <svg id="Task2a" width="165" height="220">

@@ -40,27 +40,30 @@ function init()
     //conversion from RGB values to CIELab
     //function rgbToCIELAB
     //console.log(rgbToCIELAB(141, 211, 199));
+
+    //get circles
     const circles = svg.selectAll("circle").nodes();
 
+    //extract RGB values from each
     let rgbColors = [];
     for (let i = 0; i < circles.length; i++) {
-        if ([0, 6, 10].includes(i)) continue;
-        let rgb = extractRGBFromSVG(d3.select(circles[i]));
-        if (rgb) rgbColors.push(rgb);
+        if ([0, 6, 10].includes(i)) continue; //exclude green values cause these are more problematic for color blindness
+        let rgb = extractRGBFromSVG(d3.select(circles[i])); //extract RGB
+        if (rgb) rgbColors.push(rgb); //get color in rgbColors
     }
 
     // Convert the list of RGB colors to XYZ
     let xyzColors = rgbColors.map(({ r, g, b }) => rgbToXYZ(r, g, b));
-
+    
     // Create a dictionary that maps XYZ color to RGB color
     const XYZtoRGBDict = {};
-    rgbColors.forEach(({ r, g, b }, index) => {
-        const [x, y, z] = rgbToXYZ(r, g, b);
-        XYZtoRGBDict[`${x},${y},${z}`] = { r, g, b };
+    xyzColors.forEach((xyz, index) => {
+        const key = `${xyz[0]},${xyz[1]},${xyz[2]}`; //xyz key
+        XYZtoRGBDict[key] = rgbColors[index]; //rgb
     });
 
     // Find the set of 4 colors with the greatest mean distance between each other in XYZ space
-    const bestColorSetXYZ = findMaxDistanceColors(xyzColors);
+    const bestColorSetXYZ = findMaxDistanceColors(xyzColors); //in conversion.js
     console.log("Best set of 4 colors (XYZ):", bestColorSetXYZ);
 
     // Get the bestColorSetRGB with the XYZtoRGBDict and create circles4
@@ -70,14 +73,17 @@ function init()
     });
     console.log("Best set of 4 colors (RGB):", bestColorSetRGB);
 
+    // Convert the best set of RGB colors to CIELAB to have a more intuitive 
+    // representation of their similarity
+    let CIELABColors = bestColorSetRGB.map(({ r, g, b }) => rgbToCIELAB(r, g, b));
+    console.log("Best set of 4 colors (CIELAB):", CIELABColors);
+
     // Visualize the 4 selected colors with circles of sufficient size
     svg.selectAll(".colors4Circle").data(bestColorSetRGB).enter().append("circle")
-        .attr("class", "colors4Circle")
         .attr("cx", function(d, i) { return 10 + i * 20; })
         .attr("cy", 40).attr("r", 10)
         .attr("fill", function(d) { return `rgb(${d.r}, ${d.g}, ${d.b})`; });
 }
-
 
     //+++++++++++
     //++Task 2a++
