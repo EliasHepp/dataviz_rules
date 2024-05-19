@@ -38,7 +38,8 @@
             
             <li><b>b) </b><i>(2/15 points)</i>
                 <p><i>Disadvantage of 12-class Set3</i> <br>  
-                    Spontaneous ordering effects could take place for some colors that have similar hue. (????????????)
+                    Spontaneous ordering effects could take place for some colors that have similar hue. The color scheme is rather low on color intensity, which makes it hard to properly distinguish between
+                    the data categories.
                     <!-- Your answer... --> 
                 </p>
             </li>
@@ -67,17 +68,16 @@
         <ul>
             <li><b>a) </b><i>(1/5 points)</i>
                 <p><i>Construct mapping rules?</i> <br>  
-                    We chose to apply a mapping rule that uses the traffic light mapping drivers are familiar with: 0 is green, 50 is yellow, and 100 is red. 
-                    It takes the input number to get a proportional value of rgb between green and yellow if the number is below 50 and between yellow and red if it is above 50.
-                    Thus, it becomes greener the closer to 0, more yellow when closer to 50 and more red when closer to 100.
-                </p>
+                    We chose to apply a mapping rule that maps the speed limit from red (0) to blue (100). Red is usually associated with slowing down and danger in the domain of traffic regulation, thus fitting the 
+                    lowest speed value possible. Blue is used as an alternative for the usual green, as it is perceivable by colour blind people. The traffic light was designed to be inclusive.
+                    It takes the input number to get a proportional value of rgb between the specific red and blue (recommended for colour blind people).                </p>
                 <svg id="Task2a" width="165" height="220">
                     <g id="traffic_light_prototype" transform="translate(10,10)">
                         <rect x="0" y="0" width="150" height = "200" fill="none" stroke-width="4" stroke="DimGray"/>
                         <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
-                        <circle class="minValue"cx="20" cy="20"  r="15" fill="green" />
+                        <circle class="minValue"cx="20" cy="20"  r="15" fill="red" />
                         <text class="trafficText" x="40" y="30" >0</text>
-                        <circle class="maxValue" cx="130"cy="20"  r="15" fill="red" />
+                        <circle class="maxValue" cx="130"cy="20"  r="15" fill="blue" />
                         <text class="trafficText" x="70" y="30" >100</text>
                         <circle id="currentLimit" cx="75" cy="120" r="70" fill="yellow" />
                         <!-- Your code (or in index.js)... -->
@@ -94,9 +94,9 @@
                     <g id="traffic_light1" transform="translate(10,10)">
                         <rect x="0" y="0" width="150" height="200" fill="none" stroke-width="4" stroke="DimGray"/>
                         <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
-                        <circle class="minValue" cx="20" cy="20" r="15" fill="green" />
+                        <circle class="minValue" cx="20" cy="20" r="15" fill="red" />
                         <text class="trafficText" x="40" y="30">0</text>
-                        <circle class="maxValue" cx="130" cy="20" r="15" fill="red" />
+                        <circle class="maxValue" cx="130" cy="20" r="15" fill="blue" />
                         <text class="trafficText" x="70" y="30">100</text>
                         <circle id="currentLimit1" cx="75" cy="120" r="70" fill="yellow" />
                     </g>
@@ -104,9 +104,9 @@
                     <g id="traffic_light2" transform="translate(180,10)">
                         <rect x="0" y="0" width="150" height="200" fill="none" stroke-width="4" stroke="DimGray"/>
                         <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
-                        <circle class="minValue" cx="20" cy="20" r="15" fill="green" />
+                        <circle class="minValue" cx="20" cy="20" r="15" fill="red" />
                         <text class="trafficText" x="40" y="30">0</text>
-                        <circle class="maxValue" cx="130" cy="20" r="15" fill="red" />
+                        <circle class="maxValue" cx="130" cy="20" r="15" fill="blue" />
                         <text class="trafficText" x="70" y="30">100</text>
                         <circle id="currentLimit2" cx="75" cy="120" r="70" fill="yellow" />
                     </g>
@@ -114,9 +114,9 @@
                     <g id="traffic_light3" transform="translate(350,10)">
                         <rect x="0" y="0" width="150" height="200" fill="none" stroke-width="4" stroke="DimGray"/>
                         <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
-                        <circle class="minValue" cx="20" cy="20" r="15" fill="green" />
+                        <circle class="minValue" cx="20" cy="20" r="15" fill="red" />
                         <text class="trafficText" x="40" y="30">0</text>
-                        <circle class="maxValue" cx="130" cy="20" r="15" fill="red" />
+                        <circle class="maxValue" cx="130" cy="20" r="15" fill="blue" />
                         <text class="trafficText" x="70" y="30">100</text>
                         <circle id="currentLimit3" cx="75" cy="120" r="70" fill="yellow" />
                     </g>
@@ -124,9 +124,9 @@
                     <g id="traffic_light4" transform="translate(520,10)">
                         <rect x="0" y="0" width="150" height="200" fill="none" stroke-width="4" stroke="DimGray"/>
                         <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
-                        <circle class="minValue" cx="20" cy="20" r="15" fill="green" />
+                        <circle class="minValue" cx="20" cy="20" r="15" fill="red" />
                         <text class="trafficText" x="40" y="30">0</text>
-                        <circle class="maxValue" cx="130" cy="20" r="15" fill="red" />
+                        <circle class="maxValue" cx="130" cy="20" r="15" fill="blue" />
                         <text class="trafficText" x="70" y="30">100</text>
                         <circle id="currentLimit4" cx="75" cy="120" r="70" fill="yellow" />
                     </g>
@@ -134,9 +134,9 @@
                     <g id="traffic_light5" transform="translate(690,10)">
                         <rect x="0" y="0" width="150" height="200" fill="none" stroke-width="4" stroke="DimGray"/>
                         <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
-                        <circle class="minValue" cx="20" cy="20" r="15" fill="green" />
+                        <circle class="minValue" cx="20" cy="20" r="15" fill="red" />
                         <text class="trafficText" x="40" y="30">0</text>
-                        <circle class="maxValue" cx="130" cy="20" r="15" fill="red" />
+                        <circle class="maxValue" cx="130" cy="20" r="15" fill="blue" />
                         <text class="trafficText" x="70" y="30">100</text>
                         <circle id="currentLimit5" cx="75" cy="120" r="70" fill="yellow" />
                     </g>
@@ -145,10 +145,10 @@
             
             <li><b>c) </b><i>(2/5 points)</i>
                 <p><i>Disadvantages of your chosen color mapping?</i>
-                    A great disadvantage is that it is very difficult for drivers to grasp the difference between a few numbers (e.g. 66 and 68). Furthermore, the mapping from yellow to red means that values turn orange when getting closer to 75, which is hard to understand given the regular structure of the traffic light.
+                    A great disadvantage is that it is very difficult for drivers to grasp the difference between a few numbers (e.g. 66 and 68). Furthermore, the mapping from red to blue means that values turn purple when getting closer to 50, which is likely hard to interpret for most people.
                 </p>
                 <p><i>Advantages of your chosen color mapping?</i>
-                    The value is continous and granular, allowing for a very precise mapping. An alternative mapping would be to use less than 100 colours, e.g. 3  (e.g. green, yellow, red) or 5 (dark green, light green, yellow, light red, dark red) and map values accordingly (0-33, 34-66, 67-100, etc.). This would be easier to understand, yet less granular in indicating tempo limits
+                    The value is continous and granular, allowing for a very precise mapping. An alternative mapping would be to use less than 100 colours, e.g. 3  (e.g. red, purple, blue) or 5 (dark red, light red, purple, light blue, dark blue) and map values accordingly (0-33, 34-66, 67-100, etc.). This would be easier to understand, yet less granular in indicating tempo limits. Another improvement would be to use a third colour, that is more informative in indicating a middle value.
                 </p>
             </li>
         </ul>

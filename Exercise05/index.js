@@ -40,7 +40,6 @@ function init()
     //conversion from RGB values to CIELab
     //function rgbToCIELAB
     //console.log(rgbToCIELAB(141, 211, 199));
-
     const circles = svg.selectAll("circle").nodes();
 
     let rgbColors = [];
@@ -85,60 +84,51 @@ function init()
     //+++++++++++
 
     // Mapping rules
-function mapNumberToColor(number) {
-    // Color extremes
-    const color0 = [0, 255, 0]; // green
-    const color100 = [255, 0, 0]; // red
-    const color50 = [255, 255, 0]; // yellow
-
-    if (number <= 50) {
-        const proportion = number / 50;
+document.addEventListener("DOMContentLoaded", function() {
+    function mapNumberToColor(number) {
+        // Color extremes
+        const color0 = [220, 50, 32]; // red
+        const color100 = [0, 90, 181]; //blue
+    
+        const proportion = number / 100;
         const color = [
-            Math.round(color0[0] + (color50[0] - color0[0]) * proportion),
-            Math.round(color0[1] + (color50[1] - color0[1]) * proportion)
+            Math.round(color0[0] + (color100[0] - color0[0]) * proportion),
+            Math.round(color0[1] + (color100[1] - color0[1]) * proportion),
+            Math.round(color0[2] + (color100[2] - color0[2]) * proportion)
         ];
-        return `rgb(${color[0]}, ${color[1]}, 0)`;
-    } else {
-        const proportion = (number - 50) / 50;
-        const color = [
-            Math.round(color50[0] + (color100[0] - color50[0]) * proportion),
-            Math.round(color50[1] + (color100[1] - color50[1]) * proportion)
-        ];
-        return `rgb(${color[0]}, ${color[1]}, 0)`;
+    
+        return `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
     }
-}
-
-// Update circle color based on value
-function updateColor2a(value) {
-    const circle = document.getElementById('currentLimit');
-    circle.setAttribute('fill', mapNumberToColor(value));
-}
-
-// Example usage
-const inputValue = 50; // Change this to test different values
-updateColor2a(inputValue);
-
-
-
-    //+++++++++++
-    //++Task 2b++
-    //+++++++++++
-function updateColor2b(value, id) {
-    const circle = document.getElementById('currentLimit' + id);
-    circle.setAttribute('fill', mapNumberToColor(value));
-}
     
-    // Generate five random numbers between 1 and 100
-const randomNumbers = [];
-for (let i = 0; i < 5; i++) {
-    randomNumbers.push(Math.floor(Math.random() * 100) + 1);
-}
+    // Update circle color based on value
+    function updateColor2a(value) {
+        const circle = document.getElementById('currentLimit');
+        circle.setAttribute('fill', mapNumberToColor(value));
+    }
     
-    // Display the random numbers on traffic lights
-for (let i = 0; i < 5; i++) {
-    updateColor2b(randomNumbers[i], i + 1);
-}    
+    // Example usage
+    const inputValue = 60; // Change this to test different values
+    updateColor2a(inputValue);
 
+        //+++++++++++
+        //++Task 2b++
+        //+++++++++++
+    function updateColor2b(value, id) {
+        const circle = document.getElementById('currentLimit' + id);
+        circle.setAttribute('fill', mapNumberToColor(value));
+    }
+        
+        // Generate five random numbers between 1 and 100
+    const randomNumbers = [];
+    for (let i = 0; i < 5; i++) {
+        randomNumbers.push(Math.floor(Math.random() * 100) + 1);
+    }
+        
+        // Display the random numbers on traffic lights
+    for (let i = 0; i < 5; i++) {
+        updateColor2b(randomNumbers[i], i + 1);
+    }    
+});
 
 //++++++++++++++++++++++++++++++++++++++++++++++++
 //++++++++No need to touch this function++++++++++
