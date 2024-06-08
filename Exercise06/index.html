@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="data.js"></script> 
+    <script src="index.js"></script>
+    <style>
+        .axis path,
+        .axis line {
+            fill: none;
+            shape-rendering: crispEdges;
+        }
+        .axis text {
+            font-size: 10px;
+        }
+        .cell {
+            border: 1px solid #ddd;
+        }
+        .frame {
+            fill: none;
+            stroke: #aaa;
+        }
+        .histogram-bar {
+            fill: steelblue;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="header">
+        <h1>Exercise 6</h1> 
+        <p>Contributors: Agustina Pesce (01/1247019) & Elias Heppner (01/1244414)</p><br>
+    </div>
+
+
+    <div>
+        <h2>Task 1 (15 points)</h2>
+
+    
+    <div>
+        <h2>Task 2 (5 points)</h2>
+            <i>Which visualization would you choose to create?
+        Describe the visualization inlcuding visual encodings and justify your answer.  </i>
+        <p>
+<!--            The visualisation should serve to identify patterns in the user characteristic that can be used to create differential marketing
+            campaigns for diverse user groups. Thus, it is necessary to
+        
+            1. get an understanding of the individual variables (e.g. if most users are of a certain age group)
+            2. patterns in the data (e.g. between age group and user satisfaction) </p>
+        -->
+        <p>
+            Assuming the dataset is large in the number of data points but not dimension, a scatterplot matrix would be the most fitting method for inspection.
+            It grants insights on both the individual variables, as well as pairwise relationships. A scatterplot matrix with scatterplots, histograms and correlation metrices, just as in task 1 would be fitting.
+            Clusters in the scatterplot matrix should be encoded by color with a color blind friendly palette to ease investigation. This visualisation would use position (points in plots), color (clusters), and texture (cells).
+        </p>
+        
+        <p>
+            Scatterplot matrices have a disadvantage in displaying a lot of information at once. Thus, it is necessary to highlight relevant cells in the matrix to guide the attention of the client.
+            After investigation, variables with relevant relationships should be placed close to each other to be easier to find for the client. More relevant individual variables should be placed closer to the top left.
+            The most relevant cells should be highlighted by a thicker outline (texture) that is blue rather than black (color)
+        </p>
+        
+        <p>
+            Parallel coordinate plots are probably hard to grasp for non-expert users, and mosaic plots are better suited when checking for more than pairwise relationships. Crosstabular visualisations would also be well-suited for easy understanding and to avoid overplotting,
+            but may not reveal the desired patterns as well as a scatterplot matrix.
+        </p>
+        </div>  
+      
+</body>
+</html>
