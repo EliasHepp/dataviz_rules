@@ -1,22 +1,31 @@
 // Define the dimensions of the plot
-const width = 960,
-      size = 150,
-      padding = 20;
+const svgWidth = 1200;
+const svgHeight = 1200;
+const padding = 20; // Increased padding for better spacing
+const size = 200; // Adjust based on your data and required plot size
+const margin = { left: 50, right: 20, bottom: 50 };
+
 
 const x = d3.scaleLinear().range([padding / 2, size - padding / 2]);
 const y = d3.scaleLinear().range([size - padding / 2, padding / 2]);
 
-const xAxis = d3.axisBottom().scale(x).ticks(5);
-const yAxis = d3.axisLeft().scale(y).ticks(5);
+const xAxis = d3.axisBottom(x).ticks(5)//.tickSize(0).tickFormat('');
+const yAxis = d3.axisLeft(y).ticks(5)//.tickSize(0).tickFormat('');
 
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-const svg = d3.select('body')
-              .append('svg')
-              .attr('width', width)
-              .attr('height', width)
-              .append('g')
-              .attr('transform', 'translate(' + padding + ',' + padding / 2 + ')');
+const svg = d3.select('#Task1');
+if (svg.empty()) {
+    console.error('SVG not found.');
+} else {
+    console.log('SVG found:', svg);
+}
+
+svg.attr('width', svgWidth)
+   .attr('height', svgHeight)
+   .style('border', '2px solid black') // Add border for visibility
+   .append('g')
+   .attr('transform', 'translate(' + padding + ',' + padding / 2 + ')');
 
 const domainByTrait = {};
 const traits = Object.keys(data[0]).filter(d => typeof data[0][d] === 'number');
@@ -26,8 +35,8 @@ traits.forEach(trait => {
     domainByTrait[trait] = d3.extent(data, d => d[trait]);
 });
 
-xAxis.tickSize(size * n);
-yAxis.tickSize(-size * n);
+//xAxis.tickSize(size * n);
+//yAxis.tickSize(-size * n);
 
 svg.selectAll('.x.axis')
     .data(traits)
@@ -36,6 +45,7 @@ svg.selectAll('.x.axis')
     .attr('transform', (d, i) => 'translate(' + (n - i - 1) * size + ',0)')
     .each(function (d) { x.domain(domainByTrait[d]); d3.select(this).call(xAxis); });
 
+
 svg.selectAll('.y.axis')
     .data(traits)
     .enter().append('g')
@@ -43,14 +53,39 @@ svg.selectAll('.y.axis')
     .attr('transform', (d, i) => 'translate(0,' + i * size + ')')
     .each(function (d) { y.domain(domainByTrait[d]); d3.select(this).call(yAxis); });
 
+// Add labels at the top
+svg.selectAll('.x.axis')
+    .append('text')
+    .attr('class', 'axis-label')
+    .attr('x', 10) //size / 2)
+    .attr('y', 10)//-padding / 2-10)
+    .attr('dy', '.71em')
+    .style('text-anchor', 'middle')
+    .text(d => d)
+    .style('font-size', '14px');
+
+// Add labels at the left
+svg.selectAll('.y.axis')
+    .append('text')
+    .attr('class', 'axis-label')
+    .attr('transform', 'rotate(-90)')
+    //.attr('x', -size / 2)
+    //.attr('y', padding / 2-10)
+    .attr('dy', '.71em')
+    .style('text-anchor', 'middle')
+    .text(d => d)
+    .style('font-size', '14px');
+
+//svg.selectAll('.x.axis .domain, .y.axis .domain').remove();
+
 const cell = svg.selectAll('.cell')
     .data(cross(traits, traits))
     .enter().append('g')
     .attr('class', 'cell')
-    .attr('transform', d => 'translate(' + (n - d.i - 1) * size + ',' + d.j * size + ')')
+    .attr('transform', d => 'translate(' + d.j * size + ',' + d.i * size + ')')
     .each(plot);
 
-cell.filter(d => d.i === d.j).each(histogram);
+cell.filter(d => d.i  === d.j).each(histogram);
 cell.filter(d => d.i > d.j).each(scatterplot);
 cell.filter(d => d.i < d.j).each(correlation);
 
@@ -60,19 +95,23 @@ function plot(p) {
     x.domain(domainByTrait[p.x]);
     y.domain(domainByTrait[p.y]);
 
+    // Remove the inner lines
     cell.append('rect')
         .attr('class', 'frame')
         .attr('x', padding / 2)
         .attr('y', padding / 2)
         .attr('width', size - padding)
-        .attr('height', size - padding);
+        .attr('height', size - padding)
+        .style('fill', 'none') // Remove fill
+        .style('stroke', 'black') // Set border color
+        .style('stroke-width', '2px'); // Set border width
 }
 
 function histogram(p) {
     const cell = d3.select(this);
     const bins = d3.histogram()
         .domain(x.domain())
-        .thresholds(x.ticks(20))
+        .thresholds(x.ticks(6))
         (data.map(d => d[p.x]));
 
     const yHist = d3.scaleLinear()
@@ -88,8 +127,9 @@ function histogram(p) {
     bar.append('rect')
         .attr('class', 'histogram-bar')
         .attr('x', 1)
-        .attr('width', x(bins[0].x1) - x(bins[0].x0) - 1)
-        .attr('height', d => size - padding / 2 - yHist(d.length));
+        .attr('width', d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+        .attr('height', d => Math.max(0, size - padding / 2 - yHist(d.length)))
+        .style('fill', 'steelblue'); // Adjust bar color, ensure no stroke
 }
 
 function scatterplot(p) {
@@ -104,7 +144,14 @@ function scatterplot(p) {
         .attr('cx', d => x(d[p.x]))
         .attr('cy', d => y(d[p.y]))
         .attr('r', 3)
-        .style('fill', d => color(d.price));
+        .style('fill', "black") //black
+        .style('stroke', 'none')
+        .on('mouseover', function() {
+            d3.select(this).attr('class', 'highlight');
+        })
+        .on('mouseout', function() {
+            d3.select(this).attr('class', '');
+        });
 }
 
 function correlation(p) {
@@ -125,7 +172,7 @@ function cross(a, b) {
     const n = a.length;
     const m = b.length;
     for (let i = 0; i < n; i++) {
-        for (let j = 0; j < m; j++) {
+        for (let j = m - 1; j >= 0; j--) {
             c.push({x: a[i], i: i, y: b[j], j: j});
         }
     }
@@ -141,4 +188,4 @@ function pearsonCorrelation(x, y) {
     return numerator / denominator;
 }
 
-console.log("show succ")
+console.log("show succ");

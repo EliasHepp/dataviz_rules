@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="data.js"></script> 
-    <script src="index.js"></script>
+    <!--<script type="text/javascript" src="d3.js"></script>-->
     <style>
         .axis path,
         .axis line {
@@ -24,6 +23,9 @@
         .histogram-bar {
             fill: steelblue;
         }
+        svg {
+            overflow: visible;
+        }
     </style>
 </head>
 <body>
@@ -37,8 +39,10 @@
     <div>
         <h2>Task 1 (15 points)</h2>
 
+        <svg id="Task1"></svg>
+
     
-    <div>
+        <div style="margin-top: 50px;">
         <h2>Task 2 (5 points)</h2>
             <i>Which visualization would you choose to create?
         Describe the visualization inlcuding visual encodings and justify your answer.  </i>
@@ -66,6 +70,10 @@
             but may not reveal the desired patterns as well as a scatterplot matrix.
         </p>
         </div>  
-      
+
+    <script src="data.js"></script> 
+    <script src="index.js"></script>
 </body>
 </html>
+
+
