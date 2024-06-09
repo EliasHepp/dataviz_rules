@@ -5,13 +5,16 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <!--<script type="text/javascript" src="d3.js"></script>-->
     <style>
+
+        body {
+            padding-left: 50px; /* Adjust as needed to move the content away from the left page margin */
+            font-size: 25px; /* Set the base font size */
+            font-family: Arial, sans-serif; /* Update font family */
+        }
         .axis path,
         .axis line {
             fill: none;
             shape-rendering: crispEdges;
-        }
-        .axis text {
-            font-size: 10px;
         }
         .cell {
             border: 1px solid #ddd;
@@ -25,6 +28,14 @@
         }
         svg {
             overflow: visible;
+            margin-bottom: 30px;
+        }
+        select#correlationSelect,
+        button#updateButton {
+            font-size: 30px; /* Increase font size */
+            font-family: Arial, sans-serif; /* Update font family */
+            margin-top: 10px; /* Adjust top margin */
+            margin-bottom: 30px;
         }
     </style>
 </head>
@@ -38,10 +49,37 @@
 
     <div>
         <h2>Task 1 (15 points)</h2>
+        <div>
+            <select id="correlationSelect">
+                <option value="pearson">Pearson</option>
+                <option value="spearman">Spearman</option>
+            </select>
+            <button id="updateButton">Update</button>
+        </div>
 
         <svg id="Task1"></svg>
 
-    
+        <h2>Task 1c (5 points)</h2>
+        <i>Using the visualization you created, list a number of findings about the datasets: <br>
+            - Which ones are the correlated dimensions? <br>
+            - What elements in the visualizations can help you identify the correlated dimensions?  <br>
+            - What can you say about the data, based on the correlations? </i>
+    <p>
+        The most positively correlated dimensions are highway_mpg and city_mpg, price and engine_size, and horsepower and engine_size, horsepower and price.
+        The most inversely correlated dimensions are city_mpg and horsepower, highway_mpg and horsepower and highway_mpg and price.<br><br>
+
+        The first thing that comes at sight is the scatterplot of highway_mpg and city_mpg since its points are the most compacted in a ascendent line. In second term some other correlations can be seen in the plots, 
+        but the numbers in the correlations are most helpful to detect which of these are the strongest. <br><br>
+
+        The correlations seen seem plausible since it is expected that the consumption of gas is similar in cities and highway. Moreover,
+        the price correlations also are according to expected: the greater the engine and horsepower the more costy the car is.
+        Regarding the inverse correlations it is apparently the case that greater horsepower takes to less gas consumption.<br><br>
+
+        Finally, attending to the low correlations, it seems that the cars rpm does not have a strong relation with any of the assessed variables.
+
+    </p>
+
+
         <div style="margin-top: 50px;">
         <h2>Task 2 (5 points)</h2>
             <i>Which visualization would you choose to create?
