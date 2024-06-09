@@ -135,7 +135,15 @@ function plot(p) {
         .style('fill', 'none') // Remove fill
         .style('stroke', 'black') // Set border color
         .style('stroke-width', '2px'); // Set border width
-}
+
+    // Add hover events to highlight related elements
+    cell.on('mouseover', function(event, d) {
+        highlight(d, true);
+    })
+    .on('mouseout', function(event, d) {
+        highlight(d, false);
+    });
+    }
 
 function histogram(p) {
     const cell = d3.select(this);
@@ -248,6 +256,23 @@ function cross(a, b) {
     return c;
 }
 
+function highlight(d, highlight) {
+    const highlightColor = highlight ? 'red' : 'black';
 
+    // Highlight the scatter plot cell
+    svg.selectAll('.cell')
+        .filter(p => (p.i === d.i && p.j === d.j) || (p.i === d.j && p.j === d.i))
+        .select('rect').style('stroke', highlightColor);
+
+    // Highlight the correlation text cell
+    svg.selectAll('.correlation-text')
+        .filter(p => (p.i === d.i && p.j === d.j) || (p.i === d.j && p.j === d.i))
+        .style('fill', highlightColor);
+
+    // Highlight the histogram cells for the traits involved
+    svg.selectAll('.cell')
+        .filter(p => (p.i === d.i && p.i === p.j) || (p.j === d.j && p.i === p.j))
+        .select('rect').style('stroke', highlightColor);
+}
 
 console.log("show succ");
