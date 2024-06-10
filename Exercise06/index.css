@@ -16,3 +16,10 @@ svg {
     margin-bottom: 30px;
     margin-left: 30px;
 }
+.row-label, .column-label {
+    text-anchor: middle;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    dominant-baseline: middle;
+}
