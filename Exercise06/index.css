@@ -1,0 +1,18 @@
+body {
+    padding-left: 50px;
+    font-size: 25px;
+    font-family: Arial, sans-serif; 
+}
+select#correlationSelect,
+button#updateButton {
+    font-size: 30px; 
+    font-family: Arial, sans-serif;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+svg {
+    overflow: visible;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-left: 30px;
+}
