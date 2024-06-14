@@ -119,14 +119,14 @@ function create_pcp(dataset, dims){
 
   // TASK: build the x scale (hint: each dimension should get a point distributed evenly across the width of the chart svg)
   var xScale = d3.scalePoint()
-  .domain(dims)
-  .range([0, visWidth])
-  .padding(1);
+    .domain(dims)
+    .range([0, visWidth])
+    .padding(1);
 
   // TASK: build color scale for the dimension "species"
   var colorScale = d3.scaleOrdinal()
-  .domain(dataset.map(d => d.species))
-  .range(d3.schemeCategory10);
+    .domain(dataset.map(d => d.species))
+    .range(d3.schemeCategory10);
 
   // adjust color legend to display species in the respective colors
   d3.select('#legend').selectAll('span')
@@ -142,12 +142,19 @@ function create_pcp(dataset, dims){
       .attr("transform", `translate(${xScale(dim)},0)`)
       .each(function() {
         d3.select(this).call(d3.axisLeft(yScales[dim]));
-      })
-      .append("text")
-      .style("text-anchor", "middle")
-      .attr("y", visHeight + 10)
-      .attr("x", 0)
-      .text(dim);
+      });
+
+  // Append x-axis labels
+  chart.selectAll(".dimension")
+    .data(dims)
+    .enter().append("text")
+    .attr("class", "dimension")
+    .attr("x", d => xScale(d))
+    .attr("y", visHeight + 20)
+    .style("text-anchor", "middle")
+    .text(d => d)
+    .style("font-family", "Arial, sans-serif")
+    .style("font-size", "10px");
   });
    
   // TASK: draw the data lines to the chart svg as path elements; 
@@ -171,8 +178,6 @@ function create_pcp(dataset, dims){
 
 // initialize the plot with the default ordering of dimensions
 create_pcp(cleanData, dimensionsOrder);
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
