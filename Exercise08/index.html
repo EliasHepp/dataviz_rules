@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Vis - Assignment 08</title>
+  <script src="d3.js" charset="utf-8"></script>
+  <script src="stonks.js"></script>
+  <style>
+    .line {
+        fill: none;
+        stroke-width: 2px;
+    }
+</style>
+</head>
+<body>
+
+  
+  <div id="header">
+    <h1>Exercise 8</h1> 
+    <p>Contributors: Agustina Pesce (01/1247019) & Elias Heppner (01/1244414)</p><br>
+</div>
+
+<h2>Task 1 (11 points)</h2>
+<div id="chart"></div>
+<script src="index.js"></script>
+
+
+<h2>Task 2 (9 points)</h2>
+<h3>Scenario 1</h3>
+    Domain Situation: The Covid-19 pandemic led a lot of stocks to plummet. After the first 6 months of the pandemic, there 
+    is a need to identify the relative development of the five stocks the bank is most invested in. The banks is reconsidering how to weigh its investments.<br><br>
+
+    Visualization Design Description: Braided Graph, as in Figure 1 <br><br>
+
+    Justification: The task is to visually identify how the stocks developed after the crisis started. A braided graph clearly indicates which stock stayed stable, regrew or decreased further during the pandemic, making it easy to decide where the bank should put it's money.  <br><br>
+
+<h3>Scenario 2</h3>
+    Domain Situation: A fond manager seeks to review the overall development of the stock over the last 6 months.<br><br>
+
+    Visualization Design Description: Stacked Line Chart <br><br>
+
+    Justification: A stacked line chart makes it easy to identify the overall development of the fond, as it is cummulative. Furthermore, it still provides information on the individual positions in the fond, and allows to visually investigate their share in it. <br><br>
+
+<h3>Scenario 3</h3>
+    Domain Situation: An analyst is to present the development of multiple stocks since their date of purchase in a report.<br><br>
+
+    Visualization Design Description: Horizon Graph<br><br>
+
+    Justification: The horizon graph makes it possible to choose the buy-in date as an individual baseline. More importantly though, it is very space efficient, and it is easy to read which stocks grew or diminished. <br><br>
+
+
+</body>
