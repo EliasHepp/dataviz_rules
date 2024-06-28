@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <title>Exercise 9</title>
+  <link rel="stylesheet" href="index.css" />
+  <script type="text/javascript" src="d3.js" charset="utf-8"></script>
+  <script type="text/javascript" src="data.js"></script>
+  <script type="text/javascript" src="index.js"></script>
+</head>
+
+<body onload="init()">
+  <div>
+    <h1>Exercise 9: Relational Data</h1>
+    <h4>Contributor 1: Agustina Pesce (01/1247019)</h4>
+    <h4>Contributor 2: Elias Heppner (01/1244414)</h4>
+  </div>
+  <div>
+    <h2>Task 1 Node-link Diagram (10 points)</h2>
+    <fieldset>
+      <div>
+        <input type="checkbox" id="house_checkbox" name="house_checkbox">
+        <label for="house_checkbox">Sum Houses</label>
+      </div>
+    </fieldset>
+    <svg id="chart">
+      <g id="vis-g"></g>
+    </svg>
+  </div>
+
+  <div>
+    <!-- TASK 2, provide your answer in the index.html document-->
+    <h2>Task 2 Node-link Diagram vs. Adjacency Matrix (10 points)</h2>
+    <ul>
+      <li><b>a) </b><i>(1/10 points)</i>
+          <p><i>Name <b>TWO</b> combinations of ingredients that were combined most often.</i>
+              <!-- Your answer... --> 
+              <ul>
+                <li>
+                  Crunchy and Oat with strawberries
+                </li>
+                <li>
+                  Coconutchips and mangos
+                </li>
+              </ul>
+          </p>
+      </li>
+      <li><b>b) </b><i>(1/10 points)</i>
+        <p><i>If we would represent the same data with an adjacency matrix, would the task be simpler to solve? <br/> 
+          Explain why or why not?</i>
+          An adjacency matrix, overall, would not be more suited to the task. We are interested in the strength of the relationship, not just whether there is one at all - which is the only thing we can read from an adjacency matrix.
+          Thus, it would be suited to find often combined ingredients only for cases where there is merely one connection for both ingredients. For all other ingredients, it is not informative.
+          When colouring the cells by combination occurrence in the data, it would still be worse to identify relationship strenghts in comparison to a node-link diagram. <!-- Your answer... --> 
+      </p>
+      </li>
+      <li><b>c) </b><i>(5/10 points)</i>
+        <p><i>Transform the node-link diagram shown in Figure 03 to an adjacency matrix. (2/5) </i>
+          <!-- Insert the adjacency matrix here... --> 
+      </p>
+      <p><i>How many patterns can be found? Name and explain those patterns. (3/5) </i>
+          <!-- Your answer... -->  
+      </p>
+      </li>
+      <li><b>d) </b><i>(3/10 points)</i>
+        <p><i>You were given a social network of 100 people. <br/>
+          You want to identify whether person A and person B know each other.<br/>
+          If there is no direct connection, you want to find a path between the two nodes. <br/>
+          Which visualization technique would you choose (node-link diagram or adjacency matrix)? <br/>
+          Explain your choice.
+        </i>
+          <!-- Your answer... --> 
+      </p>
+      </li>
+  </ul>
+  </div>
+</body>
