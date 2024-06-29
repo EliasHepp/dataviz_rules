@@ -46,7 +46,7 @@
       </li>
       <li><b>b) </b><i>(1/10 points)</i>
         <p><i>If we would represent the same data with an adjacency matrix, would the task be simpler to solve? <br/> 
-          Explain why or why not?</i>
+          Explain why or why not?</i><br/>
           An adjacency matrix, overall, would not be more suited to the task. We are interested in the strength of the relationship, not just whether there is one at all - which is the only thing we can read from an adjacency matrix.
           Thus, it would be suited to find often combined ingredients only for cases where there is merely one connection for both ingredients. For all other ingredients, it is not informative.
           When colouring the cells by combination occurrence in the data, it would still be worse to identify relationship strenghts in comparison to a node-link diagram. <!-- Your answer... --> 
@@ -54,10 +54,12 @@
       </li>
       <li><b>c) </b><i>(5/10 points)</i>
         <p><i>Transform the node-link diagram shown in Figure 03 to an adjacency matrix. (2/5) </i>
-          <!-- Insert the adjacency matrix here... --> 
+          <div id="matrix-container"></div>
       </p>
-      <p><i>How many patterns can be found? Name and explain those patterns. (3/5) </i>
-          <!-- Your answer... -->  
+      <p><i>How many patterns can be found? Name and explain those patterns. (3/5) </i> <br>
+        <li>Nodes 5 and 9 are highly connected nodes (hub nodes), since their columns and rows have many connections.</li>
+          <li>There is a block (clique) conformed by nodes 9 to 13, these nodes are fully connected between each other.</li>
+          <li>There is a path (stair) that leads from the first to the last node.</li>
       </p>
       </li>
       <li><b>d) </b><i>(3/10 points)</i>
@@ -65,9 +67,15 @@
           You want to identify whether person A and person B know each other.<br/>
           If there is no direct connection, you want to find a path between the two nodes. <br/>
           Which visualization technique would you choose (node-link diagram or adjacency matrix)? <br/>
-          Explain your choice.
+          Explain your choice.<br/><br/>
         </i>
-          <!-- Your answer... --> 
+          Since the network isn't that big, a node-link diagram seems most suited for the task.
+          To detect indirect paths from an adjacency matrix it would probably imply a lot of ordering 
+          efforts, and the user may be unsure if all orderings have been seen before concluding 
+          no indirect path takes place. 
+          <br/> 
+          In case the network is densely connected, and therefore indirect paths harder to detect, an 
+          interactive tool where nodes can be highlighted with their connections would be of great help for the task.
       </p>
       </li>
   </ul>

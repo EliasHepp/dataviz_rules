@@ -153,3 +153,72 @@ function aggregateData(unaggregated, attribute) {
     
     return newData;
 }
+
+//++++++++++++++++++
+//--TASK 2--
+//++++++++++++++++++
+document.addEventListener("DOMContentLoaded", function() {
+    const matrixContainer = d3.select("#matrix-container");
+
+    const numNodes = 13;
+    const cellDimension = 20;
+    const svgDimension = numNodes * cellDimension + 50;
+
+    const adjMatrix = [
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0]
+    ];
+
+    const matrixSvg = matrixContainer.append("svg")
+        .attr("width", svgDimension)
+        .attr("height", svgDimension);
+
+    const matrixRows = matrixSvg.selectAll(".row")
+        .data(adjMatrix)
+        .enter().append("g")
+        .attr("class", "row");
+
+    matrixRows.each(function(rowData, i) {
+        const row = d3.select(this);
+
+        row.selectAll(".cell")
+            .data(rowData)
+            .enter().append("rect")
+            .attr("class", "cell")
+            .attr("x", (d, j) => j * cellDimension + 50)
+            .attr("y", i * cellDimension + 50)
+            .attr("width", cellDimension)
+            .attr("height", cellDimension)
+            .attr("stroke", "black")
+            .attr("fill", d => d ? "black" : "white");
+
+        // Add labels for rows
+        matrixSvg.append("text")
+            .attr("x", 35)
+            .attr("y", i * cellDimension + 65)
+            .attr("class", "matrix-label")
+            .text(i + 1);
+    });
+
+    // Add labels for columns
+    for (let i = 0; i < numNodes; i++) {
+        matrixSvg.append("text")
+            .attr("x", i * cellDimension + 50 + cellDimension / 2)
+            .attr("y", 35)
+            .attr("class", "matrix-label")
+            .attr("text-anchor", "middle")
+            .attr("alignment-baseline", "middle")
+            .text(i + 1);
+    }
+});
