@@ -19,20 +19,20 @@
       <b>ii. Which variable could we encode by node size? </b>
         <p>sales_EUR</p>
       <b>iii. What could be an appropriate hierarchical structure with 3 levels (root→ level 1 → level 2 → level 3)? Explain your choice.</b>
-        <p>We would choose retailer (root) → country → city → supplier as structure since it is the most informative to appreciate the structure of each city's suppliers.
+        <p>We would choose retailer (root) → country → city → supplier as structure since it is the most informative to appreciate the structure of each country and city.
           This hierarchy is also good for understanding what are the most important countries and cities for the company profit.
           However, other structures can be useful for other objectives, having supplier as level one variable may be of help to detect how much dependent the retailer is
-          on that supplier </p>
+          on that supplier. Placing cities over countries is the only hierarchy that is never useful. </p>
       <b>iv. The data contains sales data of one year. Imagine we have data over multiple years – how would this change your answers from i. - iii.?</b>
-        <p>If data for different years was provided year would be set as the level 1 grouping variable. This would make visible if the retailer yearly revenues are growing or decreasing.
-          In addition, diferent suppliers could be identified at different years (an interactive hoovering could be added) and it could be detected if the supplier is getting more important for the retailers business.
+        <p>If data for different years was provided year would be set as the level 1 grouping variable. This would make visible if the retailer yearly revenues are growing or decreasing, and would still be highly useful for country comparisons. Supplier and city comparisons, across time, would become slightly more difficult.
+          In addition, diferent suppliers could be identified at different years (an interactive hoovering could be added) and it could be detected if the supplier is getting more important for the retailers business. The root node and size encoding variable would remain.
         </p>
 
       <h3>Task 1b)</h3>
       <b>What are advantages and disadvantages of using a node-link diagram to visualize this specific dataset?</b>
       <p>Node-link diagrams are advantageous for being easy to understand, in this case, the size of the nodes would show informatively 
         the sales values at the greater levels of country and cities. Nevertheless having 66 cities and 50 suppliers may bring problems 
-        of overlapping nodes or labels. Moreover, node size at lower levels of the hierarchy (level 3 or leaves) may be difficult to differentiate.
+        of overlapping nodes or labels, scalability and use of space. It would be an unnecessarily large visualization, and node size at lower levels of the hierarchy (level 3 or leaves) may be difficult to differentiate.
       </p>
       
       <!---- 
@@ -62,39 +62,38 @@
   suitable or state <b>how you would need to adapt</b> the visualization for this purpose</p>
     <b>i. Which city has the highest cumulated sales? <br>
       To which country does this city belong to?</b>
-      <p><li>From the visualization the city with the greatest square area can be detected quite easily. 
-        It is also easy to identify to which country each city belongs to</li>
+      <p><li>From the visualization the country with the greatest city square areas can be detected quite easily, and it is easy to identify to which country each city belongs to. The chosen hierarchy structure provides good visual cues for questions at country level. </li>
          <li>Berlin in Germany has the highest cumulated sales.</li>
-         <li>No adaptations would need to be done</li>
+         <li>It is not perceivable on first sight though whether Berlin or Hamburg has the highest sales. Ordering the cities by sales within each country or setting a unified square width would make it even easier to perceive the differences.</li>
       </p>
     <b>ii. Which supplier has the highest cumulated sales? <br>
       In which city does this supplier generate the most sales?</b>
       <p><li>Since suppliers are level 3 in the hierarchy and their sales are divided along the cities within the countries
          it is dificult to detect which one generates the most sales.</li>
-         <li>Samsung seems an important supplier since it has a big presence in the cities with most sales. 
-          It makes the most sales in Hamburg</li></p>
-          <li>To better detect supplier global relevance and in which city they perform best it would be better to set this variable as level 1 in the hierarchy</li>
+         <li>Samsung seems an important supplier since it has a big presence in the cities with most sales, and is present in many other cities. Nokia and Apple seem to be selling in a lot of cities too. 
+          It makes the most sales in Hamburg.</li></p>
+          <li>To better detect supplier global relevance, and in which city they perform best, it would be better to set this variable as level 1 in the hierarchy.</li>
     <b>iii. Which country has the highest cumulated sales? <br>
       What percentage of total sales does this correspond to?</b>
-      <p><li>As country is the level 1 agrupation this task is easy to accomplish.</li>
-        <li>The country is Germany. It seems more than a 60% share.</li>
-        <li>No changes should be performed.</li>
+      <p><li>As for question i, the chosen hierarchy structure provides good visual cues for questions at country level.</li>
+        <li>The country is Germany. It seems to be more than a 60% share, yet it is impossible to know the exact value.</li>
+        <li>Again, a common square width would make it easier to estimate the difference visually, yet this is not the idea of a treemap.</li>
         </p>
     <b>iv. Are there cities where all sales are generated by a single supplier?</b>
       <p><li>Since the cities have a higher hierarchy than the supliers this is easy to identify in the current structure. 
         However, when sales get too small it may be difficult to visualize the city.</li>
         <li>Yes, Winterthur with Siemes and a city in Austria with Sony</li>
         <li>Rectangle area could be increase for an easier visualization of cities with low sales. 
-          Additionally overlapping labels hindern supplier name visualization</li></p>
+          Additionally, overlapping labels hinder supplier name visualization. </li></p>
     <b>v. Are there country-specific trends, i.e., some supplier(s) operating mainly in a 
       specific country or unusual sales volume of certain suppliers in comparison to 
       other countries?</b>
-      <p><li></li>
-        <li></li>
-        <li></li></p>
+      <p><li>As for question ii., this question is difficult to answer as suppliers are at the lowest level of the hierarchy, making it unsuitable for the question.</li>
+        <li>Since Germany has the most cities with shops and the largest cities, some smaller suppliers seem to operate mostly in Germany and not at all in Austria (XOLO, Blackberry, QMobile, etc.) in Germany. Concerning sales volumes, the visualisation does not give much information, yet it seems like there are no differences for specific retailers across countries.</li>
+        <li>When keeping with the current hierarchy, colouring the suppliers and adding a legend would make it easier to discern who sells where and how much. </li></p>
     <b>vi. How many different suppliers generate sales in the city of Graz (Austria) and 
       which of them generates the highest sales?</b>
-      <p><li></li>
-        <li></li>
-        <li></li></p>
+      <p><li>This question is easy to answer with the current visualization.</li>
+        <li>Nokia, Gionee, Google, LG and Acer products are sold in Graz. Nokia generates the most sales at 91826€.</li>
+        <li>As for question iv., overlapping labels hinder reading supplier names easily. Chosing a smaller font size or forcing plotting at different positions when overlapping would make it easier to read supplier names.</li></p>
 </body>
