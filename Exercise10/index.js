@@ -19,15 +19,16 @@ const chart = d3.select('#chart')
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-// Step 1: Convert Dataset to Hierarchical Format
+//1. Convert the provided dataset into an appropriate hierarchical format using your structure from Task 1a) iii.
+//retailer (root) → country → city → supplier
 function transformData(data) {
-  const root = { name: "Retailer", children: [], sales_EUR: 0 };
+  const root = { name: "Retailer", children: [], sales_EUR: 0 }; //root
   const countries = {};
 
   data.forEach(d => {
     root.sales_EUR += d.sales_EUR;
 
-    if (!countries[d.country]) {
+    if (!countries[d.country]) {                                //level 1: country
       countries[d.country] = { name: d.country, children: [], sales_EUR: 0 };
       root.children.push(countries[d.country]);
     }
@@ -37,7 +38,7 @@ function transformData(data) {
 
     let city = country.children.find(c => c.name === d.city);
 
-    if (!city) {
+    if (!city) {                                              //level 2: city
       city = { name: d.city, children: [], sales_EUR: 0 };
       country.children.push(city);
     }
@@ -46,7 +47,7 @@ function transformData(data) {
 
     let supplier = city.children.find(s => s.name === d.supplier);
 
-    if (!supplier) {
+    if (!supplier) {                                        //level 3: supplier
       supplier = { name: d.supplier, children: [], sales_EUR: 0 };
       city.children.push(supplier);
     }
@@ -61,10 +62,10 @@ function transformData(data) {
 const hierarchicalData = transformData(data);
 console.log("Hierarchical Data", hierarchicalData);
 
-// Step 2: Initialize Treemap Layout
-const root = d3.hierarchy(hierarchicalData)
+const root = d3.hierarchy(hierarchicalData) //adapt data for treemap
   .sum(d => d.sales_EUR);
 
+//2. Use d3.treemap() to initialize the Treemap layout
 const treemapLayout = d3.treemap()
   .size([visWidth, visHeight])
   .paddingOuter(16)
@@ -73,42 +74,34 @@ const treemapLayout = d3.treemap()
 
 treemapLayout(root);
 
-// Step 3: Add Rectangles and Coloring
+//Coloring setting
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-// Create a map to store colors for each country
-const countryColors = new Map();
+const countryColors = new Map();    //Map to store colors for each country
 root.children.forEach((d, i) => {
   countryColors.set(d.data.name, color(i));
 });
 
-// Helper function to lighten a color
-function lightenColor(color, percent) {
+function lightenColor(color, percent) { //For lower levels use variants of country color
   const d3Color = d3.color(color);
   d3Color.opacity = percent;
   return d3Color.brighter(percent).toString();
 }
 
+//3. Add the rectangles to the chart svg.
 const nodes = chart.selectAll('g')
   .data(root.descendants())
   .enter()
   .append('g')
   .attr('transform', d => `translate(${d.x0},${d.y0})`);
 
-//nodes.append('rect')
-  //.attr('width', d => d.x1 - d.x0)
-  //.attr('height', d => d.y1 - d.y0)
-  //.attr('fill', d => d.depth === 1 ? countryColors.get(d.data.name) : d.depth > 1 ? countryColors.get(d.ancestors()[1].data.name) : '#ccc')
- // .attr('fill', d => color(d.depth))
- // .attr('stroke', '#fff');
-
-  nodes.append('rect')
+nodes.append('rect')
   .attr('width', d => d.x1 - d.x0)
   .attr('height', d => d.y1 - d.y0)
   .attr('fill', d => {
     if (d.depth === 1) {
       return countryColors.get(d.data.name);
-    } else if (d.depth === 2) {
+    } else if (d.depth === 2) {                  //lighten other levels colors rectangles
       return lightenColor(countryColors.get(d.ancestors()[1].data.name), 0.5);
     } else if (d.depth === 3) {
       return lightenColor(countryColors.get(d.ancestors()[2].data.name), 1);
@@ -117,29 +110,26 @@ const nodes = chart.selectAll('g')
   })
   .attr('stroke', '#fff');
 
-// Step 4: Add Text to Rectangles (Supplier Names)
-nodes.filter(d => d.depth === 3)  // Only add text to level 3 nodes (supplier level)
+//4. Add a text element for level 3 (suppliers)
+nodes.filter(d => d.depth === 3)
   .append('text')
-  .attr('x', d => 4) // Center text horizontally
-  .attr('y', d => 8) // Center text vertically
-  .attr('dy', '0.35em') // Adjust vertical alignment
-  .text(d => d.data.name) // Display supplier name
-  .attr('font-size', '10px')
-  //.attr('text-anchor', 'middle') // Center align the text
-  //.attr('fill', 'black');
-
-// Step 5: Add Headings Above Rectangles
-nodes.filter(d => d.depth === 1)  // Only add text to level 1 nodes
-  .append('text')
-  .attr('x', -2)
-  .attr('y', -9)
+  .attr('x', d => 4) 
+  .attr('y', d => 8)
+  .attr('dy', '0.35em')
   .text(d => d.data.name)
-  .attr('font-size', '20px')
-  .attr('fill', d => countryColors.get(d.data.name)) // Set the color of the label
-  .attr('font-weight', 'bold'); // Make the text bold
-//  .attr('fill', 'black');
+  .attr('font-size', '10px')
 
-// Step 6: Add Interactivity
+//5. Add a text element for level 1 (suppliers)
+nodes.filter(d => d.depth === 1) 
+  .append('text')
+  .attr('x', 6)
+  .attr('y', -6)
+  .text(d => d.data.name.toUpperCase()) //Upper case as in FinViz example
+  .attr('font-size', '20px')
+  .attr('fill', d => countryColors.get(d.data.name)) // Set label color
+  .attr('font-weight', 'bold');
+
+//6. Add interactivity
 const tooltip = d3.select('body').append('div')
   .attr('class', 'own-tooltip'); // Use the CSS class for styling
 
@@ -152,8 +142,7 @@ nodes.on('mouseover', function(event, d) {
     .filter(node => node.data.name !== d.data.name)
     .style('opacity', 0.1);
 
-  // Define tooltip content based on depth
-  let tooltipContent = '';
+  let tooltipContent = '';   // tooltip content based on depth
   if (d.depth === 0) {
     tooltipContent = `Retailer<br><br>Sales: ${d.data.sales_EUR} (EUR)`;
   } else if (d.depth === 1) {
@@ -166,13 +155,13 @@ nodes.on('mouseover', function(event, d) {
     tooltipContent = `Supplier: ${d.data.name}<br><br>Sales: ${d.data.sales_EUR} (EUR)<br><br>City: ${city}<br><br>Country: ${country}`;
   }
 
-  // Show tooltip
   tooltip.style('display', 'block')
     .html(tooltipContent);
 })
   
   .on('mousemove', function(event) {
-  tooltip.style('left', (event.pageX + 5) + 'px')
+    tooltip.classed('own-tooltip', true)
+    tooltip.style('left', (event.pageX + 20) + 'px') //better visibility of the tooltip
     .style('top', (event.pageY + 5) + 'px');
 })
 
