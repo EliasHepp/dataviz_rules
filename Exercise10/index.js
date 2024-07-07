@@ -76,16 +76,45 @@ treemapLayout(root);
 // Step 3: Add Rectangles and Coloring
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
+// Create a map to store colors for each country
+const countryColors = new Map();
+root.children.forEach((d, i) => {
+  countryColors.set(d.data.name, color(i));
+});
+
+// Helper function to lighten a color
+function lightenColor(color, percent) {
+  const d3Color = d3.color(color);
+  d3Color.opacity = percent;
+  return d3Color.brighter(percent).toString();
+}
+
 const nodes = chart.selectAll('g')
   .data(root.descendants())
   .enter()
   .append('g')
   .attr('transform', d => `translate(${d.x0},${d.y0})`);
 
-nodes.append('rect')
+//nodes.append('rect')
+  //.attr('width', d => d.x1 - d.x0)
+  //.attr('height', d => d.y1 - d.y0)
+  //.attr('fill', d => d.depth === 1 ? countryColors.get(d.data.name) : d.depth > 1 ? countryColors.get(d.ancestors()[1].data.name) : '#ccc')
+ // .attr('fill', d => color(d.depth))
+ // .attr('stroke', '#fff');
+
+  nodes.append('rect')
   .attr('width', d => d.x1 - d.x0)
   .attr('height', d => d.y1 - d.y0)
-  .attr('fill', d => color(d.depth))
+  .attr('fill', d => {
+    if (d.depth === 1) {
+      return countryColors.get(d.data.name);
+    } else if (d.depth === 2) {
+      return lightenColor(countryColors.get(d.ancestors()[1].data.name), 0.5);
+    } else if (d.depth === 3) {
+      return lightenColor(countryColors.get(d.ancestors()[2].data.name), 1);
+    }
+    return '#ccc';
+  })
   .attr('stroke', '#fff');
 
 // Step 4: Add Text to Rectangles (Supplier Names)
@@ -97,25 +126,22 @@ nodes.filter(d => d.depth === 3)  // Only add text to level 3 nodes (supplier le
   .text(d => d.data.name) // Display supplier name
   .attr('font-size', '10px')
   //.attr('text-anchor', 'middle') // Center align the text
-  .attr('fill', 'black');
+  //.attr('fill', 'black');
 
 // Step 5: Add Headings Above Rectangles
 nodes.filter(d => d.depth === 1)  // Only add text to level 1 nodes
   .append('text')
-  .attr('x', 4)
-  .attr('y', 18)
+  .attr('x', -2)
+  .attr('y', -9)
   .text(d => d.data.name)
-  .attr('font-size', '14px')
-  .attr('fill', 'black');
+  .attr('font-size', '20px')
+  .attr('fill', d => countryColors.get(d.data.name)) // Set the color of the label
+  .attr('font-weight', 'bold'); // Make the text bold
+//  .attr('fill', 'black');
 
 // Step 6: Add Interactivity
 const tooltip = d3.select('body').append('div')
-  .attr('id', 'tooltip')
-  .style('opacity', 0)
-  .style('position', 'absolute')
-  .style('background-color', 'white')
-  .style('padding', '5px')
-  .style('border', '1px solid #ccc');
+  .attr('class', 'own-tooltip'); // Use the CSS class for styling
 
 nodes.on('mouseover', function(event, d) {
   chart.selectAll('rect')
@@ -141,7 +167,7 @@ nodes.on('mouseover', function(event, d) {
   }
 
   // Show tooltip
-  tooltip.style('opacity', 1)
+  tooltip.style('display', 'block')
     .html(tooltipContent);
 })
   
@@ -152,5 +178,5 @@ nodes.on('mouseover', function(event, d) {
 
   .on('mouseout', function() {
   chart.selectAll('rect').style('opacity', 1);
-  tooltip.style('opacity', 0);
+  tooltip.style('display', 'none');
 });
