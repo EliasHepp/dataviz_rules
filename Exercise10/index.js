@@ -152,7 +152,12 @@ nodes.on('mouseover', function(event, d) {
   } else if (d.depth === 3) {
     const city = d.parent.data.name;
     const country = d.parent.parent.data.name;
-    tooltipContent = `Supplier: ${d.data.name}<br><br>Sales: ${d.data.sales_EUR} (EUR)<br><br>City: ${city}<br><br>Country: ${country}`;
+    tooltipContent = `Supplier: ${d.data.name}<br><br>Sales: ${d.data.sales_EUR} (EUR)<br><br>City: ${city}<br><br>Country: ${country}`
+  } else if (d.depth === 4) {
+    const supplier = d.parent.data.name;  
+    const city = d.parent.parent.data.name;
+    const country = d.parent.parent.parent.data.name;
+    tooltipContent = `Sale ID: ${d.data.name}<br><br>Sales: ${d.data.sales_EUR} (EUR)<br><br>Supplier: ${supplier}<br><br>City: ${city}<br><br>Country: ${country}`;
   }
 
   tooltip.style('display', 'block')
